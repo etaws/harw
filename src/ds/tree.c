@@ -3,7 +3,25 @@
 
 #include "ds/tree.h"
 
+typedef struct data data;
+
+static data* data_new(uint16_t v);
+
 static bool data_mirror(data* d1, data* d2);
+static bool tree_mirror(tree* t);
+
+struct data {
+  uint16_t v;
+
+  data* left;
+  data* right;
+};
+
+struct tree {
+  data* root;
+
+  size_t size;
+};
 
 data* data_new(uint16_t v) {
   data* d = malloc(sizeof(data));
@@ -296,4 +314,46 @@ void tree_pre(size_t len, tree* t, uint16_t r[len]) {
   }
 
   free(a);
+}
+
+void create_mirror_tree() {
+  tree* t = tree_new();
+
+  data* d1 = data_new(1);
+  data* d2 = data_new(2);
+  data* d3 = data_new(2);
+  data* d4 = data_new(3);
+  data* d5 = data_new(4);
+  data* d6 = data_new(4);
+  data* d7 = data_new(3);
+
+  t->root = d1;
+
+  d1->left = d2;
+  d1->right = d3;
+
+  d2->left = d4;
+  d2->right = d5;
+
+  d3->left = d6;
+  d3->right = d7;
+
+  t->size = 7;
+
+  assert(t->size == 7);
+
+  free(d1);
+  free(d2);
+  free(d3);
+  free(d4);
+  free(d5);
+  free(d6);
+  free(d7);
+
+  bool b = tree_mirror(t);
+
+  t->root = 0;
+  t->size = 0;
+
+  tree_destroy(t);
 }
