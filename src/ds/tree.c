@@ -15,11 +15,15 @@ data* data_new(uint16_t v) {
 }
 
 void tree_insert(tree* t, uint16_t v) {
+
+  assert(t != 0);
+
   data* d = data_new(v);
-  if (t->root != 0) {
-  } else {
+
+  if (t->root == 0) {
     t->root = d;
     t->size += 1;
+    return;
   }
 
   data* c = t->root;
@@ -66,7 +70,7 @@ void tree_destroy(tree* t) {
     r[j] = 0;
   }
 
-  data** a = malloc(t->size * sizeof(data*));
+  data* a[t->size];
   for (size_t j = 0; j < t->size; ++j) {
     a[j] = 0;
   }
@@ -88,14 +92,14 @@ void tree_destroy(tree* t) {
     i -= 1;
     current = a[i];
     r[r_i++] = current;
+    assert(r_i <= t->size);
 
     current = current->right;
   }
 
-  free(a);
-
   for (size_t j = 0; j < t->size; ++j) {
     free(r[j]);
+    r[j] = 0;
   }
 
   free(t);

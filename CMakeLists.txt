@@ -4,6 +4,9 @@ cmake_minimum_required(VERSION 3.20.0)
 # C 项目。名字：harw；
 project(harw C)
 
+#set(tools /Users/xzhou/tools/llvm-14)
+#set(CMAKE_C_COMPILER ${tools}/bin/clang)
+
 # C11 标准
 set(CMAKE_C_STANDARD 11)
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fsanitize=leak -fno-omit-frame-pointer -g")
