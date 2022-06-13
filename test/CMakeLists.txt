@@ -1,14 +1,12 @@
 include(FetchContent)
-FetchContent_Declare(
-  googletest
-  GIT_REPOSITORY https://github.com/google/googletest.git
-  GIT_TAG release-1.11.0
-)
-# For Windows: Prevent overriding the parent project's compiler/linker settings
-set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
-FetchContent_MakeAvailable(googletest)
 
-add_executable(unit_tests list_test.cpp)
-target_link_libraries(unit_tests PRIVATE list gtest_main)
-include(GoogleTest)
-gtest_discover_tests(unit_tests)
+include(FetchContent)
+FetchContent_Declare(
+    Tau
+    URL https://github.com/jasmcaus/tau/archive/dev.zip
+    )
+
+FetchContent_MakeAvailable(Tau)
+
+add_executable(unit_tests list_test.c)
+target_link_libraries(unit_tests PRIVATE list Tau)
