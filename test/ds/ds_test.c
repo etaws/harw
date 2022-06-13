@@ -1,6 +1,7 @@
 #include "ds/list.h"
 #include "ds/tree.h"
 #include "tau/tau.h"
+#include <stdint.h>
 
 TAU_MAIN()
 
@@ -56,4 +57,60 @@ TEST(b, tree) {
 TEST(c, tree_mirror) {
   create_mirror_tree();
   REQUIRE(true);
+}
+
+TEST(d, queue_empty) {
+
+  queue* q = queue_create(1);
+  REQUIRE(q != 0);
+
+  size_t len = queue_len(q);
+  REQUIRE(len == 0);
+
+  bool ok = queue_add(q, 1);
+  REQUIRE(ok == false);
+
+  uint16_t v = queue_delete(q);
+  REQUIRE_EQ(v, 0);
+
+  queue_destroy(q);
+}
+
+TEST(d, queue_2) {
+
+  queue* q = queue_create(2);
+  REQUIRE(q != 0);
+
+  size_t len = queue_len(q);
+  REQUIRE(len == 0);
+
+  uint16_t v = queue_delete(q);
+  REQUIRE_EQ(v, 0);
+
+  bool ok = queue_add(q, 1);
+  REQUIRE(ok == true);
+  REQUIRE_EQ(queue_len(q), 1);
+
+  bool ok2 = queue_add(q, 2);
+  REQUIRE(ok2 == false);
+
+  uint16_t v1 = queue_delete(q);
+  REQUIRE_EQ(v1, 1);
+
+  len = queue_len(q);
+  REQUIRE(len == 0);
+  v = queue_delete(q);
+  REQUIRE_EQ(v, 0);
+
+  ok = queue_add(q, 2);
+  REQUIRE(ok == true);
+  REQUIRE_EQ(queue_len(q), 1);
+
+  v1 = queue_delete(q);
+  REQUIRE_EQ(v1, 2);
+
+  len = queue_len(q);
+  REQUIRE(len == 0);
+
+  queue_destroy(q);
 }
