@@ -96,7 +96,7 @@ size_t list_len(list *l) {
   return l->len;
 }
 
-void list_destory(list *l) {
+void list_destroy(list *l) {
   if (l->head == 0) {
     return;
   }

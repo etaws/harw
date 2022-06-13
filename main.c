@@ -22,7 +22,7 @@ int main() {
   list_insert(l, n2);
   assert(list_len(l) == 2);
 
-  list_destory(l);
+  list_destroy(l);
   assert(list_len(l) == 0);
 
   printf("all tests pass.\n");

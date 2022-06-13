@@ -6,12 +6,12 @@
 typedef struct node node;
 typedef struct list list;
 
-node *node_new();
+node *node_new(int v);
 void node_delete(node *node);
 
 list *list_create();
 void list_insert(list *l, node *n);
 size_t list_len(list *l);
-void list_destory(list *l);
+void list_destroy(list *l);
 
 #endif
