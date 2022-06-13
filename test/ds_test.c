@@ -21,6 +21,11 @@ TEST(b, require) {
 
   REQUIRE_EQ(tree_size(t), 0);
 
-  tree_insert(t, 18);
-  REQUIRE_EQ(tree_size(t), 1);
+  uint16_t a[] = {1, 2, 3, 3, 4};
+
+  for (int i = 0; i < sizeof(a) / sizeof(a[0]); ++i) {
+    tree_insert(t, a[i]);
+  }
+
+  REQUIRE_EQ(tree_size(t), 4);
 }

@@ -20,6 +20,29 @@ void tree_insert(tree* tree, uint16_t v) {
     tree->root = d;
     tree->size += 1;
   }
+
+  data* c = tree->root;
+  while (1) {
+    if (v < c->v) {
+      if (c->left == 0) {
+        c->left = d;
+        tree->size += 1;
+        break;
+      } else {
+        c = c->left;
+      }
+    } else if (v > c->v) {
+      if (c->right == 0) {
+        c->right = d;
+        tree->size += 1;
+        break;
+      } else {
+        c = c->right;
+      }
+    } else {
+      break;
+    }
+  }
 }
 
 tree* tree_new(void) {
