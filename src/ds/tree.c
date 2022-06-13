@@ -3,7 +3,7 @@
 
 #include "ds/tree.h"
 
-static data* data_new(uint16_t v);
+static bool data_mirror(data* d1, data* d2);
 
 data* data_new(uint16_t v) {
   data* d = malloc(sizeof(data));
@@ -116,6 +116,38 @@ tree* tree_new(void) {
 size_t tree_size(tree* t) {
   assert(t != 0);
   return t->size;
+}
+
+bool tree_mirror(tree* t) {
+
+  if (t == 0) {
+    return true;
+  }
+
+  return data_mirror(t->root->left, t->root->right);
+}
+
+bool data_mirror(data* d1, data* d2) {
+  if ((d1 == 0) && (d2 == 0)) {
+    return true;
+  }
+
+  if (d1 == 0 && d2 != 0) {
+    return false;
+  }
+
+  if (d1 != 0 && d2 == 0) {
+    return false;
+  }
+
+  if (d1->v != d2->v) {
+    return false;
+  } else {
+    bool b1 = data_mirror(d1->left, d2->right);
+    bool b2 = data_mirror(d1->right, d2->left);
+
+    return b1 && b2;
+  }
 }
 
 void tree_post(size_t len, tree* t, uint16_t r[len]) {

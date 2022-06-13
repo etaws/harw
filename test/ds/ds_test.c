@@ -56,3 +56,46 @@ TEST(b, tree) {
 
   tree_destroy(t);
 }
+
+TEST(c, tree_mirror) {
+  tree* t = tree_new();
+
+  data* d1 = data_new(1);
+  data* d2 = data_new(2);
+  data* d3 = data_new(2);
+  data* d4 = data_new(3);
+  data* d5 = data_new(4);
+  data* d6 = data_new(4);
+  data* d7 = data_new(3);
+
+  t->root = d1;
+
+  d1->left = d2;
+  d1->right = d3;
+
+  d2->left = d4;
+  d2->right = d5;
+
+  d3->left = d6;
+  d3->right = d7;
+
+  t->size = 7;
+
+  REQUIRE_EQ(t->size, 7);
+
+  free(d1);
+  free(d2);
+  free(d3);
+  free(d4);
+  free(d5);
+  free(d6);
+  free(d7);
+
+  bool b = tree_mirror(t);
+  REQUIRE_EQ(b, true);
+
+  t->root = 0;
+  t->size = 0;
+
+  tree_destroy(t);
+}
