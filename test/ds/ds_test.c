@@ -1,6 +1,6 @@
-#include "list.h"
+#include "ds/list.h"
 #include "tau/tau.h"
-#include "tree.h"
+#include "ds/tree.h"
 
 TAU_MAIN()
 

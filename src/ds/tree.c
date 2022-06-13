@@ -1,7 +1,7 @@
 #include <assert.h>
 #include <stdlib.h>
 
-#include "tree.h"
+#include "ds/tree.h"
 
 static data* data_new(uint16_t v);
 

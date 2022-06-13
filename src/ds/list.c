@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "list.h"
+#include "ds/list.h"
 
 node* node_new(uint16_t v) {
   node* n = malloc(sizeof(node));
