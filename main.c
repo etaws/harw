@@ -1,9 +1,10 @@
 #include <assert.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 #include "list/list.h"
 
-int main() {
+int main(void) {
 
   printf("begin to test...\n");
 
@@ -27,5 +28,5 @@ int main() {
 
   printf("all tests pass.\n");
 
-  return 0;
+  return EXIT_SUCCESS;
 }

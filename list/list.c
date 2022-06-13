@@ -1,23 +1,9 @@
 #include <assert.h>
-#include <stdio.h>
 #include <stdlib.h>
 
 #include "list.h"
 
-struct node {
-  int v;
-
-  node* next;
-};
-
-struct list {
-  node* head;
-  node* tail;
-
-  size_t len;
-};
-
-node* node_new(int v) {
+node* node_new(uint16_t v) {
   node* n = malloc(sizeof(node));
   n->v = v;
   n->next = 0;
@@ -27,7 +13,7 @@ node* node_new(int v) {
 
 void node_delete(node* node) { free(node); }
 
-list* list_create() {
+list* list_create(void) {
   list* l = malloc(sizeof(list));
 
   l->head = 0;
