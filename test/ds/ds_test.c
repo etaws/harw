@@ -5,10 +5,6 @@
 TAU_MAIN()
 
 TEST(a, list) {
-  node* n = node_new(0);
-
-  node_delete(n);
-
   list* l = list_create();
   REQUIRE_EQ(list_len(l), 0);
 

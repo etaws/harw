@@ -1,7 +1,26 @@
 #include <assert.h>
+#include <stdint.h>
 #include <stdlib.h>
 
 #include "ds/list.h"
+
+typedef struct node node;
+
+struct node {
+  uint16_t v;
+
+  node* next;
+};
+
+struct list {
+  node* head;
+  node* tail;
+
+  size_t len;
+};
+
+static node* node_new(uint16_t v);
+static void node_delete(node* node);
 
 node* node_new(uint16_t v) {
   node* n = malloc(sizeof(node));
@@ -23,7 +42,9 @@ list* list_create(void) {
   return l;
 }
 
-void list_insert(list* l, node* n) {
+void list_insert(list* l, uint16_t v) {
+
+  node* n = node_new(v);
 
   assert(n->next == 0);
   assert(n->v > 0);
