@@ -4,7 +4,7 @@
 
 TAU_MAIN()
 
-TEST(a, count) {
+TEST(a, list) {
   node* n = node_new(0);
 
   node_delete(n);
@@ -16,7 +16,7 @@ TEST(a, count) {
   REQUIRE_EQ(list_len(l), 0);
 }
 
-TEST(b, require) {
+TEST(b, tree) {
   tree* t = tree_new();
 
   REQUIRE_EQ(tree_size(t), 0);
