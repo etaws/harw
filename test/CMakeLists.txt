@@ -8,5 +8,5 @@ FetchContent_Declare(
 
 FetchContent_MakeAvailable(Tau)
 
-add_executable(unit_tests list_test.c)
-target_link_libraries(unit_tests PRIVATE list Tau)
+add_executable(unit_tests ds_test.c)
+target_link_libraries(unit_tests PRIVATE ds Tau)

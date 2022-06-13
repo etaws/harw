@@ -1,5 +1,5 @@
 #ifndef HARW_LIST_H_
-#define HARW_LIST_H_ 1
+#define HARW_LIST_H_
 
 #include <stddef.h>
 #include <stdint.h>

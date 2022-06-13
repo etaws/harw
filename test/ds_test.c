@@ -1,5 +1,6 @@
 #include "list.h"
 #include "tau/tau.h"
+#include "tree.h"
 
 TAU_MAIN()
 
@@ -16,6 +17,10 @@ TEST(a, count) {
 }
 
 TEST(b, require) {
-  REQUIRE_LE(1, 1);
-  REQUIRE_LE(1, 2);
+  tree* t = tree_new();
+
+  REQUIRE_EQ(tree_size(t), 0);
+
+  tree_insert(t, 18);
+  REQUIRE_EQ(tree_size(t), 1);
 }
