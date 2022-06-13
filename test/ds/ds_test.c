@@ -59,58 +59,61 @@ TEST(c, tree_mirror) {
   REQUIRE(true);
 }
 
-TEST(d, queue_empty) {
+TEST(d, queue_len_1) {
 
   queue* q = queue_create(1);
   REQUIRE(q != 0);
+  REQUIRE_EQ(queue_len(q), 0);
 
-  size_t len = queue_len(q);
-  REQUIRE(len == 0);
+  REQUIRE(queue_add(q, 1));
+  REQUIRE_EQ(queue_len(q), 1);
 
-  bool ok = queue_add(q, 1);
-  REQUIRE(ok == false);
+  REQUIRE(!queue_add(q, 2));
+  REQUIRE_EQ(queue_len(q), 1);
 
-  uint16_t v = queue_delete(q);
-  REQUIRE_EQ(v, 0);
+  REQUIRE_EQ(queue_delete(q), 1);
+  REQUIRE_EQ(queue_len(q), 0);
+
+  REQUIRE(queue_add(q, 2));
+  REQUIRE_EQ(queue_len(q), 1);
+
+  REQUIRE_EQ(queue_delete(q), 2);
+  REQUIRE_EQ(queue_len(q), 0);
+
+  REQUIRE_EQ(queue_delete(q), 0);
+  REQUIRE_EQ(queue_len(q), 0);
 
   queue_destroy(q);
 }
 
-TEST(d, queue_2) {
+TEST(d, queue_len_2) {
 
   queue* q = queue_create(2);
   REQUIRE(q != 0);
 
-  size_t len = queue_len(q);
-  REQUIRE(len == 0);
+  REQUIRE_EQ(queue_len(q), 0);
 
-  uint16_t v = queue_delete(q);
-  REQUIRE_EQ(v, 0);
+  REQUIRE_EQ(queue_delete(q), 0);
 
-  bool ok = queue_add(q, 1);
-  REQUIRE(ok == true);
+  REQUIRE(queue_add(q, 1));
   REQUIRE_EQ(queue_len(q), 1);
 
-  bool ok2 = queue_add(q, 2);
-  REQUIRE(ok2 == false);
+  REQUIRE(queue_add(q, 2));
+  REQUIRE_EQ(queue_len(q), 2);
 
-  uint16_t v1 = queue_delete(q);
-  REQUIRE_EQ(v1, 1);
-
-  len = queue_len(q);
-  REQUIRE(len == 0);
-  v = queue_delete(q);
-  REQUIRE_EQ(v, 0);
-
-  ok = queue_add(q, 2);
-  REQUIRE(ok == true);
+  REQUIRE_EQ(queue_delete(q), 1);
   REQUIRE_EQ(queue_len(q), 1);
 
-  v1 = queue_delete(q);
-  REQUIRE_EQ(v1, 2);
+  REQUIRE_EQ(queue_delete(q), 2);
+  REQUIRE_EQ(queue_len(q), 0);
 
-  len = queue_len(q);
-  REQUIRE(len == 0);
+  REQUIRE_EQ(queue_delete(q), 0);
+
+  REQUIRE(queue_add(q, 2));
+  REQUIRE_EQ(queue_len(q), 1);
+
+  REQUIRE_EQ(queue_delete(q), 2);
+  REQUIRE_EQ(queue_len(q), 0);
 
   queue_destroy(q);
 }
