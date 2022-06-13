@@ -45,9 +45,9 @@ TEST(b, tree) {
   uint16_t d[sizeof(a) / sizeof(u_int16_t)] = {0};
   tree_post(len, t, d);
 
-  uint16_t expect_post[] = {2, 6, 3, 5, 10, 9, 7};
+  uint16_t expect_post[] = {3, 2, 4, 6, 5, 10, 9, 7};
   for (int i = 0; i < sizeof(expect_post) / sizeof(expect_post[0]); ++i) {
-    // REQUIRE_EQ(expect_post[i], d[i]);
+    REQUIRE_EQ(expect_post[i], d[i]);
   }
 
   tree_destroy(t);
