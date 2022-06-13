@@ -1,6 +1,4 @@
 #include <assert.h>
-#include <inttypes.h>
-#include <stdio.h>
 #include <stdlib.h>
 
 #include "ds/list.h"
@@ -86,6 +84,7 @@ size_t list_len(list* l) {
 
 void list_destroy(list* l) {
   if (l->head == 0) {
+    free(l);
     return;
   }
 
@@ -99,13 +98,15 @@ void list_destroy(list* l) {
       l->head = 0;
       l->tail = 0;
       l->len = 0;
-      return;
+      break;
     }
 
     node* should_be_freed = current;
     current = current->next;
     free(should_be_freed);
   }
+
+  free(l);
 }
 
 void list_reverse(list* l) {
@@ -129,23 +130,4 @@ void list_reverse(list* l) {
   head->next = 0;
   l->head = l->tail;
   l->tail = head;
-}
-
-void list_print(list* l) {
-
-  if (l->head == 0) {
-    return;
-  }
-
-  if (l->len == 1) {
-    printf("%" PRIu16 "\n", l->head->v);
-    return;
-  }
-
-  node* current = l->head;
-  while (current != l->tail) {
-    printf("%" PRIu16 " ", current->v);
-    current = current->next;
-  }
-  printf("%" PRIu16 "\n", l->tail->v);
 }

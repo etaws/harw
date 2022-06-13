@@ -6,6 +6,7 @@ project(harw C)
 
 # C11 标准
 set(CMAKE_C_STANDARD 11)
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fsanitize=leak -fno-omit-frame-pointer -g")
 
 # 启用单元测试
 enable_testing()

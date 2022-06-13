@@ -30,6 +30,4 @@ void list_destroy(list* l);
 
 void list_reverse(list* l);
 
-void list_print(list* l);
-
 #endif
