@@ -7,28 +7,28 @@
 struct node {
   int v;
 
-  node *next;
+  node* next;
 };
 
 struct list {
-  node *head;
-  node *tail;
+  node* head;
+  node* tail;
 
   size_t len;
 };
 
-node *node_new(int v) {
-  node *n = malloc(sizeof(node));
+node* node_new(int v) {
+  node* n = malloc(sizeof(node));
   n->v = v;
   n->next = 0;
 
   return n;
 }
 
-void node_delete(node *node) { free(node); }
+void node_delete(node* node) { free(node); }
 
-list *list_create() {
-  list *l = malloc(sizeof(list));
+list* list_create() {
+  list* l = malloc(sizeof(list));
 
   l->head = 0;
   l->tail = 0;
@@ -37,7 +37,7 @@ list *list_create() {
   return l;
 }
 
-void list_insert(list *l, node *n) {
+void list_insert(list* l, node* n) {
 
   assert(n->next == 0);
   assert(n->v > 0);
@@ -69,7 +69,7 @@ void list_insert(list *l, node *n) {
   l->len = l->len + 1;
 }
 
-size_t list_len(list *l) {
+size_t list_len(list* l) {
   assert(l != 0);
 
   if (l->len == 0) {
@@ -84,7 +84,7 @@ size_t list_len(list *l) {
   }
 
   size_t i = 1;
-  node *current = l->head;
+  node* current = l->head;
   while (current->next != l->tail) {
     i++;
     current = current->next;
@@ -96,12 +96,12 @@ size_t list_len(list *l) {
   return l->len;
 }
 
-void list_destroy(list *l) {
+void list_destroy(list* l) {
   if (l->head == 0) {
     return;
   }
 
-  node *current = l->head;
+  node* current = l->head;
   while (current != 0) {
     // if it is the last node, free it, and ALL DONE
     if (current->next == 0) {
@@ -112,7 +112,7 @@ void list_destroy(list *l) {
       return;
     }
 
-    node *should_be_freed = current;
+    node* should_be_freed = current;
     current = current->next;
     free(should_be_freed);
   }
