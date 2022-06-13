@@ -112,6 +112,8 @@ void list_destroy(list *l) {
       return;
     }
 
+    node *should_be_freed = current;
     current = current->next;
+    free(should_be_freed);
   }
 }
