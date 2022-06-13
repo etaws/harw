@@ -15,13 +15,23 @@ int main(void) {
   list* l = list_create();
   assert(list_len(l) == 0);
 
+  list_reverse(l);
+
   node* n1 = node_new(1);
   list_insert(l, n1);
   assert(list_len(l) == 1);
 
+  list_reverse(l);
+
   node* n2 = node_new(2);
   list_insert(l, n2);
   assert(list_len(l) == 2);
+
+  list_print(l);
+
+  list_reverse(l);
+
+  list_print(l);
 
   list_destroy(l);
   assert(list_len(l) == 0);

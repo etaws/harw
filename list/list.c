@@ -1,4 +1,6 @@
 #include <assert.h>
+#include <inttypes.h>
+#include <stdio.h>
 #include <stdlib.h>
 
 #include "list.h"
@@ -91,6 +93,8 @@ void list_destroy(list* l) {
   while (current != 0) {
     // if it is the last node, free it, and ALL DONE
     if (current->next == 0) {
+      assert(current == l->tail);
+
       node_delete(current);
       l->head = 0;
       l->tail = 0;
@@ -102,4 +106,46 @@ void list_destroy(list* l) {
     current = current->next;
     free(should_be_freed);
   }
+}
+
+void list_reverse(list* l) {
+
+  if (l->head == 0) {
+    return;
+  }
+
+  if (l->len == 1) {
+    return;
+  }
+
+  node* current = l->head;
+  node* next = current->next;
+  while (current != l->tail) {
+    next->next = current;
+    current = next;
+  }
+
+  node* head = l->head;
+  head->next = 0;
+  l->head = l->tail;
+  l->tail = head;
+}
+
+void list_print(list* l) {
+
+  if (l->head == 0) {
+    return;
+  }
+
+  if (l->len == 1) {
+    printf("%" PRIu16 "\n", l->head->v);
+    return;
+  }
+
+  node* current = l->head;
+  while (current != l->tail) {
+    printf("%" PRIu16 " ", current->v);
+    current = current->next;
+  }
+  printf("%" PRIu16 "\n", l->tail->v);
 }

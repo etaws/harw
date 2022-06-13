@@ -28,4 +28,8 @@ void list_insert(list* l, node* n);
 size_t list_len(list* l);
 void list_destroy(list* l);
 
+void list_reverse(list* l);
+
+void list_print(list* l);
+
 #endif
