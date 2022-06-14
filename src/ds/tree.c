@@ -1,8 +1,14 @@
 #include <assert.h>
+#include <inttypes.h>
+#include <stdio.h>
 #include <stdlib.h>
+#include <sys/time.h>
 
 #include "ds/list.h"
+#include "ds/stats.h"
 #include "ds/tree.h"
+
+uint64_t get_posix_clock_time();
 
 typedef struct data data;
 
@@ -11,6 +17,15 @@ static data* data_new(uint16_t v);
 static bool data_mirror(data* d1, data* d2);
 static bool data_mirror_v2(data* d1, data* d2, size_t len);
 static bool tree_mirror(tree* t);
+
+uint64_t get_posix_clock_time() {
+  struct timespec ts;
+
+  if (clock_gettime(CLOCK_MONOTONIC, &ts) == 0)
+    return (uint64_t)(ts.tv_sec * 1000000 + ts.tv_nsec / 1000);
+  else
+    return 0;
+}
 
 struct data {
   uint16_t v;
@@ -344,6 +359,8 @@ bool tree_mirror(tree* t) {
 
 bool data_mirror_v2(data* d1, data* d2, size_t len) {
 
+  uint64_t t1 = get_posix_clock_time();
+
   if ((d1 == 0) && (d2 == 0)) {
     return true;
   }
@@ -402,7 +419,11 @@ bool data_mirror_v2(data* d1, data* d2, size_t len) {
     }
   }
 
+  uint64_t t2 = get_posix_clock_time();
+
   queue_destroy(q);
+
+  printf("fn time: %" PRIu64 "\n", (t2 - t1));
 
   return r;
 }
