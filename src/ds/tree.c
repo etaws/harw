@@ -9,7 +9,7 @@ typedef struct data data;
 static data* data_new(uint16_t v);
 
 static bool data_mirror(data* d1, data* d2);
-static bool data_mirror_v2(data* d1, data* d2);
+static bool data_mirror_v2(data* d1, data* d2, size_t len);
 static bool tree_mirror(tree* t);
 
 struct data {
@@ -312,6 +312,8 @@ bool create_mirror_tree() {
 
   assert(t->size == 7);
 
+  bool b = tree_mirror(t);
+
   free(d1);
   free(d2);
   free(d3);
@@ -319,8 +321,6 @@ bool create_mirror_tree() {
   free(d5);
   free(d6);
   free(d7);
-
-  bool b = tree_mirror(t);
 
   t->root = 0;
   t->size = 0;
@@ -332,19 +332,17 @@ bool create_mirror_tree() {
 
 bool tree_mirror(tree* t) {
 
-  if (t == 0) {
-    return true;
-  }
+  assert(t != 0);
 
   bool r1 = data_mirror(t->root->left, t->root->right);
-  bool r2 = data_mirror_v2(t->root->left, t->root->right);
+  bool r2 = data_mirror_v2(t->root->left, t->root->right, t->size);
 
   assert(r1 == r2);
 
-  return r1;
+  return r2;
 }
 
-bool data_mirror_v2(data* d1, data* d2) {
+bool data_mirror_v2(data* d1, data* d2, size_t len) {
 
   if ((d1 == 0) && (d2 == 0)) {
     return true;
@@ -352,11 +350,11 @@ bool data_mirror_v2(data* d1, data* d2) {
   if ((d1 != 0) && (d2 == 0)) {
     return false;
   }
-  if ((d1 == 0) && (d2 == 0)) {
+  if ((d1 == 0) && (d2 != 0)) {
     return false;
   }
 
-  queue* q = queue_create(10);
+  queue* q = queue_create(len);
 
   queue_add(q, d1);
   queue_add(q, d2);
@@ -389,10 +387,16 @@ bool data_mirror_v2(data* d1, data* d2) {
     }
 
     if ((left->left != 0) && (right->right != 0)) {
+      if (left->left->v != right->right->v) {
+        return false;
+      }
       queue_add(q, left->left);
       queue_add(q, right->right);
     }
     if ((left->right != 0) && (right->left != 0)) {
+      if (left->right->v != right->left->v) {
+        return false;
+      }
       queue_add(q, left->right);
       queue_add(q, right->left);
     }
