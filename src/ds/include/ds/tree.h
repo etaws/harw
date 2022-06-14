@@ -15,6 +15,6 @@ void tree_pre(size_t len, tree* t, uint16_t r[len]);
 void tree_post(size_t len, tree* t, uint16_t r[len]);
 void tree_destroy(tree* t);
 
-void create_mirror_tree();
+bool create_mirror_tree();
 
 #endif // HARW_TREE_H_

@@ -25,7 +25,7 @@ struct queue {
 
   size_t max_len;
 
-  uint16_t v[];
+  void* v[];
 };
 
 static node* node_new(uint16_t v);
@@ -166,7 +166,7 @@ queue* queue_create(size_t max_len) {
 
   assert(max_len > 0);
 
-  queue* q = malloc(sizeof(queue) + (max_len + 1) * sizeof(uint16_t));
+  queue* q = malloc(sizeof(queue) + (max_len + 1) * sizeof(void*));
   q->head = 0;
   q->tail = 0;
   q->max_len = max_len + 1;
@@ -195,7 +195,7 @@ size_t queue_len(queue* q) {
   }
 }
 
-bool queue_add(queue* q, uint16_t v) {
+bool queue_add(queue* q, void* v) {
   assert(q != 0);
   assert(v != 0);
 
@@ -214,13 +214,13 @@ bool queue_add(queue* q, uint16_t v) {
   return true;
 }
 
-uint16_t queue_delete(queue* q) {
+void* queue_delete(queue* q) {
 
   if (queue_len(q) <= 0) {
     return 0;
   }
 
-  uint16_t v = q->v[q->head];
+  void* v = q->v[q->head];
 
   if (q->head >= q->max_len - 1) {
     q->head = 0;

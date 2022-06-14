@@ -22,7 +22,7 @@ void queue_destroy(queue* q);
 
 size_t queue_len(queue* q);
 
-bool queue_add(queue* q, uint16_t v);
-uint16_t queue_delete(queue* q);
+bool queue_add(queue* q, void* v);
+void* queue_delete(queue* q);
 
 #endif

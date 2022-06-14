@@ -1,6 +1,7 @@
 #include <assert.h>
 #include <stdlib.h>
 
+#include "ds/list.h"
 #include "ds/tree.h"
 
 typedef struct data data;
@@ -8,6 +9,7 @@ typedef struct data data;
 static data* data_new(uint16_t v);
 
 static bool data_mirror(data* d1, data* d2);
+static bool data_mirror_v2(data* d1, data* d2);
 static bool tree_mirror(tree* t);
 
 struct data {
@@ -134,38 +136,6 @@ tree* tree_new(void) {
 size_t tree_size(tree* t) {
   assert(t != 0);
   return t->size;
-}
-
-bool tree_mirror(tree* t) {
-
-  if (t == 0) {
-    return true;
-  }
-
-  return data_mirror(t->root->left, t->root->right);
-}
-
-bool data_mirror(data* d1, data* d2) {
-  if ((d1 == 0) && (d2 == 0)) {
-    return true;
-  }
-
-  if (d1 == 0 && d2 != 0) {
-    return false;
-  }
-
-  if (d1 != 0 && d2 == 0) {
-    return false;
-  }
-
-  if (d1->v != d2->v) {
-    return false;
-  } else {
-    bool b1 = data_mirror(d1->left, d2->right);
-    bool b2 = data_mirror(d1->right, d2->left);
-
-    return b1 && b2;
-  }
 }
 
 void tree_post(size_t len, tree* t, uint16_t r[len]) {
@@ -316,7 +286,7 @@ void tree_pre(size_t len, tree* t, uint16_t r[len]) {
   free(a);
 }
 
-void create_mirror_tree() {
+bool create_mirror_tree() {
   tree* t = tree_new();
 
   data* d1 = data_new(1);
@@ -356,4 +326,102 @@ void create_mirror_tree() {
   t->size = 0;
 
   tree_destroy(t);
+
+  return b;
+}
+
+bool tree_mirror(tree* t) {
+
+  if (t == 0) {
+    return true;
+  }
+
+  bool r1 = data_mirror(t->root->left, t->root->right);
+  bool r2 = data_mirror_v2(t->root->left, t->root->right);
+
+  assert(r1 == r2);
+
+  return r1;
+}
+
+bool data_mirror_v2(data* d1, data* d2) {
+
+  if ((d1 == 0) && (d2 == 0)) {
+    return true;
+  }
+  if ((d1 != 0) && (d2 == 0)) {
+    return false;
+  }
+  if ((d1 == 0) && (d2 == 0)) {
+    return false;
+  }
+
+  queue* q = queue_create(10);
+
+  queue_add(q, d1);
+  queue_add(q, d2);
+
+  bool r = false;
+  while (1) {
+    if (queue_len(q) == 0) {
+      r = true;
+      break;
+    }
+
+    data* left = queue_delete(q);
+    data* right = queue_delete(q);
+
+    if ((left->left == 0) && (right->right != 0)) {
+      r = false;
+      break;
+    }
+    if ((left->left != 0) && (right->right == 0)) {
+      r = false;
+      break;
+    }
+    if ((left->right == 0) && (right->left != 0)) {
+      r = false;
+      break;
+    }
+    if ((left->right != 0) && (right->left == 0)) {
+      r = false;
+      break;
+    }
+
+    if ((left->left != 0) && (right->right != 0)) {
+      queue_add(q, left->left);
+      queue_add(q, right->right);
+    }
+    if ((left->right != 0) && (right->left != 0)) {
+      queue_add(q, left->right);
+      queue_add(q, right->left);
+    }
+  }
+
+  queue_destroy(q);
+
+  return r;
+}
+
+bool data_mirror(data* d1, data* d2) {
+  if ((d1 == 0) && (d2 == 0)) {
+    return true;
+  }
+
+  if (d1 == 0 && d2 != 0) {
+    return false;
+  }
+
+  if (d1 != 0 && d2 == 0) {
+    return false;
+  }
+
+  if (d1->v != d2->v) {
+    return false;
+  } else {
+    bool b1 = data_mirror(d1->left, d2->right);
+    bool b2 = data_mirror(d1->right, d2->left);
+
+    return b1 && b2;
+  }
 }
