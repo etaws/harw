@@ -1,13 +1,15 @@
-include(FetchContent)
+if(NOT Tau_FOUND)
+    include(FetchContent)
 
-# 引入 Tau
-FetchContent_Declare(
-    Tau
-    URL https://github.com/jasmcaus/tau/archive/dev.zip
-    )
-
-# 下载，构建，安装。。。
-FetchContent_MakeAvailable(Tau)
+    # 引入 Tau
+    FetchContent_Declare(
+            Tau
+            URL "file://${CMAKE_CURRENT_SOURCE_DIR}/tau-dev.zip"
+            # URL https://github.com/jasmcaus/tau/archive/dev.zip
+            )
+    # 下载，构建，安装。。。
+    FetchContent_MakeAvailable(Tau)
+endif()
 
 # 设定目标：unit_tests
 add_executable(unit_tests ds_test.c)
