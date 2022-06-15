@@ -1,5 +1,6 @@
 #include <assert.h>
 #include <inttypes.h>
+#include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/time.h>
@@ -17,6 +18,8 @@ static data* data_new(uint16_t v);
 static bool data_mirror(data* d1, data* d2);
 static bool data_mirror_v2(data* d1, data* d2, size_t len);
 static bool tree_mirror(tree* t);
+static size_t data_height(data* d);
+static size_t data_height_2(data* d, size_t len);
 
 uint64_t get_posix_clock_time() {
   struct timespec ts;
@@ -151,6 +154,68 @@ tree* tree_new(void) {
 size_t tree_size(tree* t) {
   assert(t != 0);
   return t->size;
+}
+
+size_t tree_height(tree* t) {
+  assert(t != 0);
+
+  size_t h1 = data_height(t->root);
+  size_t h2 = data_height_2(t->root, t->size + 1);
+
+  assert(h1 == h2);
+  return h1;
+}
+
+size_t data_height(data* d) {
+  size_t h_left = 0;
+  size_t h_right = 0;
+  if (d->left != 0) {
+    h_left = data_height(d->left);
+  }
+  if (d->right != 0) {
+    h_right = data_height(d->right);
+  }
+
+  if (h_left > h_right) {
+    return h_left + 1;
+  }
+  return h_right + 1;
+}
+
+size_t data_height_2(data* d, size_t len) {
+
+  assert(d != 0);
+
+  queue* q = queue_create(len);
+  queue_add(q, d);
+
+  size_t current_size = 1;
+  size_t r = 0;
+  while (1) {
+    if (queue_len(q) == 0) {
+      break;
+    }
+
+    size_t next_size = 0;
+    for (size_t i = 0; i < current_size; ++i) {
+      assert(queue_len(q) != 0);
+      data* one = queue_delete(q);
+      if (one->left != 0) {
+        queue_add(q, one->left);
+        next_size++;
+      }
+      if (one->right != 0) {
+        queue_add(q, one->right);
+        next_size++;
+      }
+    }
+    r++;
+    current_size = next_size;
+  }
+
+  queue_destroy(q);
+
+  return r;
 }
 
 void tree_post(size_t len, tree* t, uint16_t r[len]) {

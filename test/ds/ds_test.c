@@ -51,6 +51,9 @@ TEST(b, tree) {
     REQUIRE_EQ(expect_post[i], d[i]);
   }
 
+  size_t h = tree_height(t);
+  REQUIRE_EQ(h, 5);
+
   tree_destroy(t);
 }
 
