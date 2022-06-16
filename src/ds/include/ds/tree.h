@@ -10,6 +10,7 @@ typedef struct tree tree;
 tree* tree_new(void);
 size_t tree_size(tree* t);
 size_t tree_height(tree* t);
+void tree_reverse(tree* t);
 
 void tree_insert(tree* tree, uint16_t v);
 void tree_mid(size_t len, tree* t, uint16_t r[len]);

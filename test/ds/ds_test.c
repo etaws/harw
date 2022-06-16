@@ -57,6 +57,34 @@ TEST(b, tree) {
   tree_destroy(t);
 }
 
+TEST(b, tree_reverse) {
+
+  tree* t = tree_new();
+
+  REQUIRE_EQ(tree_size(t), 0);
+
+  uint16_t a[] = {7, 5, 4, 6, 2, 9, 10, 3};
+
+  for (int i = 0; i < sizeof(a) / sizeof(a[0]); ++i) {
+    tree_insert(t, a[i]);
+  }
+
+  size_t len = tree_size(t);
+
+  REQUIRE_EQ(len, 8);
+
+  tree_reverse(t);
+
+  uint16_t e[sizeof(a) / sizeof(u_int16_t)] = {0};
+  uint16_t expect_reverse[] = {7, 5, 4, 2, 3, 6, 9, 10};
+  tree_pre(len, t, e);
+  for (int i = 0; i < sizeof(expect_reverse) / sizeof(expect_reverse[0]); ++i) {
+    REQUIRE_EQ(expect_reverse[i], e[i]);
+  }
+
+  tree_destroy(t);
+}
+
 TEST(c, tree_mirror) {
   bool b = create_mirror_tree();
   REQUIRE(b);

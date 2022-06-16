@@ -20,6 +20,8 @@ static bool data_mirror_v2(data* d1, data* d2, size_t len);
 static bool tree_mirror(tree* t);
 static size_t data_height(data* d);
 static size_t data_height_2(data* d, size_t len);
+static void data_reverse(data* d);
+static void data_reverse_2(data* d, size_t len);
 
 uint64_t get_posix_clock_time() {
   struct timespec ts;
@@ -163,6 +165,7 @@ size_t tree_height(tree* t) {
   size_t h2 = data_height_2(t->root, t->size + 1);
 
   assert(h1 == h2);
+
   return h1;
 }
 
@@ -514,4 +517,54 @@ bool data_mirror(data* d1, data* d2) {
 
     return b1 && b2;
   }
+}
+
+void data_reverse_2(data* d, size_t len) {
+  assert(d != 0);
+
+  queue* q = queue_create(len + 1);
+  queue_add(q, d);
+
+  while (1) {
+    if (queue_len(q) == 0) {
+      break;
+    }
+
+    data* one = queue_delete(q);
+    data* left = one->left;
+    data* right = one->right;
+    if (left != 0) {
+      queue_add(q, one->left);
+    }
+    if (right != 0) {
+      queue_add(q, one->right);
+    }
+
+    one->left = right;
+    one->right = left;
+  }
+
+  queue_destroy(q);
+}
+
+void data_reverse(data* d) {
+  assert(d != 0);
+  if (d->left != 0) {
+    data_reverse(d->left);
+  }
+  if (d->right != 0) {
+    data_reverse(d->right);
+  }
+
+  data* left = d->left;
+  data* right = d->right;
+  d->left = right;
+  d->right = left;
+}
+
+void tree_reverse(tree* t) {
+  assert(t != 0);
+  data_reverse(t->root);
+
+  data_reverse_2(t->root, t->size);
 }
