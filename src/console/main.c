@@ -41,7 +41,7 @@ int main(void) {
 
   assert(tree_size(t) == 8);
 
-  uint16_t b[sizeof(a) / sizeof(u_int16_t)] = {0};
+  uint16_t b[sizeof(a) / sizeof(uint16_t)] = {0};
 
   size_t len = tree_size(t);
   tree_post(len, t, b);
