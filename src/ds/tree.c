@@ -473,6 +473,8 @@ bool data_mirror_v2(data* d1, data* d2, size_t len) {
     }
   }
 
+  queue_destroy(q);
+
   return r;
 }
 
