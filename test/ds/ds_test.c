@@ -1,5 +1,7 @@
 #include "ds/list.h"
+#include "ds/seek_two.h"
 #include "ds/tree.h"
+
 #include "tau/tau.h"
 #include <stdint.h>
 
@@ -150,4 +152,12 @@ TEST(d, queue_len_2) {
   REQUIRE_EQ(queue_len(q), 0);
 
   queue_destroy(q);
+}
+
+TEST(e, seek_two) {
+
+  int16_t a[] = {7, 5, 4, 6};
+
+  size_t r = seek_two_count(4, a, 12);
+  REQUIRE_EQ(r, 1);
 }
