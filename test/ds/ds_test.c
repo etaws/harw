@@ -156,7 +156,7 @@ TEST(d, queue_len_2) {
 
 TEST(e, seek_two_1) {
 
-  int16_t a[] = {4, 6, 7, 5};
+  int32_t a[] = {4, 6, 7, 5};
 
   int_tuple* r = seek_two_count(4, a, 12);
 
@@ -168,7 +168,7 @@ TEST(e, seek_two_1) {
 
 TEST(e, seek_two_2) {
 
-  int16_t a[] = {2, 3, 4};
+  int32_t a[] = {2, 3, 4};
 
   int_tuple* r = seek_two_count(3, a, 6);
 
@@ -180,7 +180,7 @@ TEST(e, seek_two_2) {
 
 TEST(e, seek_two_3) {
 
-  int16_t a[] = {3, 3};
+  int32_t a[] = {3, 3};
 
   int_tuple* r = seek_two_count(2, a, 6);
 
