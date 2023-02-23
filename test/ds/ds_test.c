@@ -154,10 +154,38 @@ TEST(d, queue_len_2) {
   queue_destroy(q);
 }
 
-TEST(e, seek_two) {
+TEST(e, seek_two_1) {
 
-  int16_t a[] = {7, 5, 4, 6};
+  int16_t a[] = {4, 6, 7, 5};
 
-  size_t r = seek_two_count(4, a, 12);
-  REQUIRE_EQ(r, 1);
+  int_tuple* r = seek_two_count(4, a, 12);
+
+  REQUIRE_EQ(seek_two_tuple_one(r), 2);
+  REQUIRE_EQ(seek_two_tuple_two(r), 3);
+
+  seek_two_clear(r);
+}
+
+TEST(e, seek_two_2) {
+
+  int16_t a[] = {2, 3, 4};
+
+  int_tuple* r = seek_two_count(3, a, 6);
+
+  REQUIRE_EQ(seek_two_tuple_one(r), 0);
+  REQUIRE_EQ(seek_two_tuple_two(r), 2);
+
+  seek_two_clear(r);
+}
+
+TEST(e, seek_two_3) {
+
+  int16_t a[] = {3, 3};
+
+  int_tuple* r = seek_two_count(2, a, 6);
+
+  REQUIRE_EQ(seek_two_tuple_one(r), 0);
+  REQUIRE_EQ(seek_two_tuple_two(r), 1);
+
+  seek_two_clear(r);
 }
