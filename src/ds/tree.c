@@ -5,7 +5,6 @@
 #include <stdlib.h>
 
 #include "ds/list.h"
-#include "ds/stats.h"
 #include "ds/tree.h"
 
 typedef struct data data;
