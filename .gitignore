@@ -6,3 +6,4 @@ compile_commands.json
 cmake-build-debug/
 .vscode/
 neovim.json
+cmake-build-debug-clang/
