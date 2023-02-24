@@ -53,6 +53,5 @@ void seek_two_clear(int_tuple* t) {
 
   if (t != 0) {
     free(t);
-    t = 0;
   }
 }

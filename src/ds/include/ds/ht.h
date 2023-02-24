@@ -16,11 +16,11 @@ ht* ht_create(void);
 // Free memory allocated for hash table, including allocated keys.
 void ht_destroy(ht* table);
 
-// Get item with given key (NUL-terminated) from hash table. Return
-// value (which was set with ht_set), or NULL if key not found.
+// Get item with given key from hash table. Return
+// value (which was set with ht_set), or -1 if key not found.
 int32_t ht_get(ht* table, int32_t key);
 
-// Set item with given key (NUL-terminated) to value (which must not
+// Set item with given key to value (which must not
 // be NULL)；-1 for failed
 int32_t ht_set(ht* table, int32_t key, int32_t value);
 
