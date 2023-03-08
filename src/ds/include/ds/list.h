@@ -5,6 +5,7 @@
 #include <stddef.h>
 #include <stdint.h>
 
+typedef struct ListNode ListNode;
 typedef struct list list;
 typedef struct queue queue;
 

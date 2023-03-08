@@ -4,6 +4,12 @@
 
 #include "ds/list.h"
 
+struct ListNode {
+  int val;
+  struct ListNode *next;
+};
+
+
 typedef struct node node;
 
 struct node {
@@ -229,4 +235,28 @@ void* queue_delete(queue*restrict q) {
   }
 
   return v;
+}
+
+struct ListNode* delete_duplicates(struct ListNode* head) {
+
+  if (head == 0) {
+    return 0;
+  }
+
+  struct ListNode* r = head;
+  struct ListNode* t = head;
+
+  struct ListNode* c = head;
+
+  while (c->next != 0) {
+    c = c->next;
+    t->next = 0;
+
+    if (t->val != c->val) {
+      t->next = c;
+      t = t->next;
+    }
+  }
+
+  return r;
 }
