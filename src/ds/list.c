@@ -6,9 +6,8 @@
 
 struct ListNode {
   int val;
-  struct ListNode *next;
+  struct ListNode* next;
 };
-
 
 typedef struct node node;
 
@@ -180,7 +179,7 @@ queue* queue_create(size_t max_len) {
   return q;
 }
 
-void queue_destroy(queue*restrict q) {
+void queue_destroy(queue* restrict q) {
 
   q->head = 0;
   q->tail = 0;
@@ -189,7 +188,7 @@ void queue_destroy(queue*restrict q) {
   free(q);
 }
 
-size_t queue_len(queue*restrict q) {
+size_t queue_len(queue* restrict q) {
   if (q->head == q->tail) {
     return 0;
   }
@@ -201,7 +200,7 @@ size_t queue_len(queue*restrict q) {
   }
 }
 
-bool queue_add(queue*restrict q, void*restrict v) {
+bool queue_add(queue* restrict q, void* restrict v) {
   assert(q != 0);
   assert(v != 0);
 
@@ -220,7 +219,7 @@ bool queue_add(queue*restrict q, void*restrict v) {
   return true;
 }
 
-void* queue_delete(queue*restrict q) {
+void* queue_delete(queue* restrict q) {
 
   if (queue_len(q) <= 0) {
     return 0;
@@ -301,4 +300,40 @@ struct ListNode* has_cycle(struct ListNode* head) {
   }
 
   return p;
+}
+
+struct ListNode* get_intersection_node(struct ListNode* headA,
+                                       struct ListNode* headB) {
+
+  if (headA == 0) {
+    return 0;
+  }
+
+  if (headB == 0) {
+    return 0;
+  }
+
+  struct ListNode* pa = headA;
+  struct ListNode* pb = headB;
+
+  while (pa != pb) {
+
+    if (pa == 0) {
+      pa = headB;
+    } else {
+      pa = pa->next;
+    }
+
+    if (pb == 0) {
+      pb = headA;
+    } else {
+      pb = pb->next;
+    }
+  }
+
+  if (pa != 0) {
+    return pa;
+  }
+
+  return 0;
 }
