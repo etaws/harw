@@ -260,3 +260,45 @@ struct ListNode* delete_duplicates(struct ListNode* head) {
 
   return r;
 }
+
+struct ListNode* has_cycle(struct ListNode* head) {
+
+  if (head == 0) {
+    return 0;
+  }
+
+  if (head->next == 0) {
+    return 0;
+  }
+
+  struct ListNode* p = head->next;
+  struct ListNode* pp = head->next->next;
+
+  while (p != 0) {
+
+    if (p == pp) {
+      pp = head;
+      break;
+    }
+
+    p = p->next;
+
+    if ((pp != 0) && (pp->next != 0) && (pp->next->next != 0)) {
+      pp = pp->next->next;
+    } else {
+      return 0;
+    }
+  }
+
+  if (p == 0) {
+    return 0;
+  }
+
+  while (p != pp) {
+
+    p = p->next;
+    pp = pp->next;
+  }
+
+  return p;
+}
