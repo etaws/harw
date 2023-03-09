@@ -337,3 +337,25 @@ struct ListNode* get_intersection_node(struct ListNode* headA,
 
   return 0;
 }
+
+struct ListNode* reverse_list(struct ListNode* head) {
+
+  if (head == 0 || head->next == 0) {
+    return head;
+  }
+
+  struct ListNode* r = 0;
+
+  struct ListNode* c = head;
+  while (c != 0) {
+
+    struct ListNode* t = c->next;
+
+    c->next = r;
+    r = c;
+
+    c = t;
+  }
+
+  return r;
+}
