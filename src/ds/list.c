@@ -359,3 +359,58 @@ struct ListNode* reverse_list(struct ListNode* head) {
 
   return r;
 }
+
+struct ListNode* reverse_between(struct ListNode* head, int left, int right) {
+  if (head == 0 || head->next == 0) {
+    return head;
+  }
+
+  if (left == right) {
+    return head;
+  }
+
+  struct ListNode* p = head;
+  struct ListNode* c = head->next;
+  if (c->next == 0) {
+    assert(left == 1 && right == 2);
+    c->next = p;
+    p->next = 0;
+    return c;
+  }
+
+  struct ListNode* n = malloc(sizeof(struct ListNode));
+  c = head;
+  n->next = head;
+  p = n;
+
+  struct ListNode* m1 = 0;
+  struct ListNode* m2 = 0;
+
+  int i = 0;
+  while (c != 0) {
+    ++i;
+
+    struct ListNode* t = c->next;
+    if (left == i) {
+      m1 = p;
+      m2 = c;
+    } else if (i > left && i < right) {
+      c->next = p;
+    } else if (i == right) {
+      assert(m1 != 0 && m2 != 0);
+      m2->next = c->next;
+      m1->next = c;
+      c->next = p;
+      break;
+    }
+
+    p = c;
+    c = t;
+  }
+
+  struct ListNode* r = n->next;
+
+  free(n);
+
+  return r;
+}
