@@ -369,48 +369,53 @@ struct ListNode* reverse_between(struct ListNode* head, int left, int right) {
     return head;
   }
 
-  struct ListNode* p = head;
-  struct ListNode* c = head->next;
-  if (c->next == 0) {
+  if (head->next->next == 0) {
+    struct ListNode* p = head;
+    struct ListNode* c = head->next;
     assert(left == 1 && right == 2);
     c->next = p;
     p->next = 0;
     return c;
   }
 
-  struct ListNode* n = malloc(sizeof(struct ListNode));
-  c = head;
-  n->next = head;
-  p = n;
+  struct ListNode* p = 0;
+  struct ListNode* c = head;
 
   struct ListNode* m1 = 0;
   struct ListNode* m2 = 0;
 
   int i = 0;
   while (c != 0) {
+    struct ListNode* t = c->next;
     ++i;
 
-    struct ListNode* t = c->next;
     if (left == i) {
-      m1 = p;
-      m2 = c;
+      if (left != 1) {
+        m1 = p;
+        m2 = c;
+      } else {
+        m2 = c;
+      }
     } else if (i > left && i < right) {
       c->next = p;
     } else if (i == right) {
-      assert(m1 != 0 && m2 != 0);
-      m2->next = c->next;
-      m1->next = c;
-      c->next = p;
-      break;
+      if (left != 1) {
+        assert(m1 != 0 && m2 != 0);
+        m2->next = c->next;
+        m1->next = c;
+        c->next = p;
+        break;
+      } else {
+        m2->next = c->next;
+        head = c;
+        c->next = p;
+        break;
+      }
     }
 
     p = c;
     c = t;
   }
 
-  struct ListNode* r = n->next;
-
-  free(n);
-
-  return r;
+  return head;
 }
