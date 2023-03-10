@@ -419,3 +419,70 @@ struct ListNode* reverse_between(struct ListNode* head, int left, int right) {
 
   return head;
 }
+
+bool is_palindrome(struct ListNode* head) {
+
+  if (head == 0 || head->next == 0) {
+    return true;
+  }
+
+  if (head->next->next == 0) {
+    if (head->val == head->next->val) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  struct ListNode* pre_slow = head;
+  struct ListNode* slow = head->next;
+  struct ListNode* fast = head->next->next;
+
+  while (fast->next != 0 && fast->next->next != 0) {
+    pre_slow = slow;
+    slow = slow->next;
+    fast = fast->next->next;
+  }
+
+  // 奇数
+  if (fast->next == 0) {
+    pre_slow->next = 0;
+    struct ListNode* second_head = slow->next;
+    slow->next = 0;
+    struct ListNode* second = reverse_list(second_head);
+
+    struct ListNode* c = second;
+    struct ListNode* d = head;
+    while (c != 0) {
+
+      if (c->val != d->val) {
+        return false;
+      }
+
+      c = c->next;
+      d = d->next;
+    }
+
+    return true;
+  } else if (fast->next->next == 0) {
+    // 偶数
+    struct ListNode* second_head = slow->next;
+    slow->next = 0;
+    struct ListNode* second = reverse_list(second_head);
+    struct ListNode* c = second;
+    struct ListNode* d = head;
+    while (c != 0) {
+
+      if (c->val != d->val) {
+        return false;
+      }
+
+      c = c->next;
+      d = d->next;
+    }
+
+    return true;
+  }
+
+  return false;
+}
