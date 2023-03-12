@@ -4,11 +4,6 @@
 
 #include "ds/list.h"
 
-struct ListNode {
-  int val;
-  struct ListNode* next;
-};
-
 typedef struct node node;
 
 struct node {

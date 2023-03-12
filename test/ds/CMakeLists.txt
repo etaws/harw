@@ -13,6 +13,8 @@ endif()
 
 # 设定目标：unit_tests
 add_executable(unit_tests ds_test.c)
+add_executable(list_uts list_test.c)
 
 # 链接
 target_link_libraries(unit_tests PRIVATE ds_obj Tau)
+target_link_libraries(list_uts PRIVATE ds_obj Tau)

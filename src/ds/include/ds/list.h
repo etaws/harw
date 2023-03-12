@@ -6,6 +6,12 @@
 #include <stdint.h>
 
 typedef struct ListNode ListNode;
+
+struct ListNode {
+  int val;
+  struct ListNode* next;
+};
+
 typedef struct list list;
 typedef struct queue queue;
 
