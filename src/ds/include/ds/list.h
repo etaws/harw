@@ -7,10 +7,8 @@
 
 typedef struct ListNode ListNode;
 
-struct ListNode {
-  int val;
-  struct ListNode* next;
-};
+ListNode* list_node_create(int a[], size_t len);
+void list_node_clean(ListNode* head);
 
 typedef struct list list;
 typedef struct queue queue;

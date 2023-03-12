@@ -4,6 +4,11 @@
 
 #include "ds/list.h"
 
+struct ListNode {
+  int val;
+  struct ListNode* next;
+};
+
 typedef struct node node;
 
 struct node {
@@ -507,4 +512,35 @@ struct ListNode* middle_node(struct ListNode* head) {
   }
 
   return 0;
+}
+
+ListNode* list_node_create(int a[], size_t len) {
+
+  ListNode* head = 0;
+  ListNode* tail = 0;
+  for (int i = 0; i < len; ++i) {
+    struct ListNode* n = malloc(sizeof(ListNode));
+    n->next = 0;
+    n->val = a[i];
+
+    if (head == 0) {
+      head = n;
+      tail = n;
+      continue;
+    }
+
+    tail->next = n;
+    tail = n;
+  }
+
+  return head;
+}
+
+void list_node_clean(ListNode* head) {
+  struct ListNode* c = head;
+  while (c != 0) {
+    ListNode* t = c;
+    c = c->next;
+    free(t);
+  }
 }
