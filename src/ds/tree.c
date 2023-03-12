@@ -19,6 +19,12 @@ static size_t data_height_2(data* d, size_t len);
 static void data_reverse(data* d);
 static void data_reverse_2(data* d, size_t len);
 
+struct TreeNode {
+  int val;
+  struct TreeNode* left;
+  struct TreeNode* right;
+};
+
 struct data {
   uint16_t v;
 
@@ -549,3 +555,5 @@ void tree_reverse(tree* t) {
 
   data_reverse_2(t->root, t->size);
 }
+
+int* inorder_traversal(struct TreeNode* root, int* returnSize) { return 0; }

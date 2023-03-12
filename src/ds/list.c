@@ -486,3 +486,30 @@ bool is_palindrome(struct ListNode* head) {
 
   return false;
 }
+
+struct ListNode* middle_node(struct ListNode* head) {
+
+  if (head == 0 || head->next == 0) {
+    return head;
+  }
+
+  if (head->next->next == 0) {
+    return head->next;
+  }
+
+  struct ListNode* slow = head->next;
+  struct ListNode* fast = head->next->next;
+
+  while (fast->next != 0 && fast->next->next != 0) {
+    slow = slow->next;
+    fast = fast->next->next;
+  }
+
+  if (fast->next == 0) {
+    return slow;
+  } else if (fast->next->next == 0) {
+    return slow->next;
+  }
+
+  return 0;
+}

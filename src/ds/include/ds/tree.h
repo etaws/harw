@@ -5,6 +5,7 @@
 #include <stddef.h>
 #include <stdint.h>
 
+typedef struct TreeNode TreeNode;
 typedef struct tree tree;
 
 tree* tree_new(void);
