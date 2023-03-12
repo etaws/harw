@@ -1,10 +1,8 @@
 #include <assert.h>
-#include <inttypes.h>
 #include <stddef.h>
-#include <stdio.h>
 #include <stdlib.h>
 
-#include "ds/list.h"
+#include "ds/queue.h"
 #include "ds/tree.h"
 
 typedef struct data data;
@@ -557,3 +555,96 @@ void tree_reverse(tree* t) {
 }
 
 int* inorder_traversal(struct TreeNode* root, int* returnSize) { return 0; }
+
+TreeNode* tree_create(const int a[], size_t len) {
+
+  if (len < 1) {
+    return 0;
+  }
+
+  TreeNode* root = malloc(sizeof(TreeNode));
+  root->val = a[0];
+  root->left = 0;
+  root->right = 0;
+
+  if (len == 1) {
+    return root;
+  }
+
+  queue* q = queue_create(len);
+  queue_add(q, root);
+
+  size_t i = 1;
+  while (1) {
+    TreeNode* one = queue_delete(q);
+    if (one == 0) {
+      break;
+    }
+    if (i >= len) {
+      break;
+    }
+
+    if (a[i] != 0) {
+      TreeNode* left = malloc(sizeof(TreeNode));
+      left->val = a[i];
+      left->left = 0;
+      left->right = 0;
+
+      one->left = left;
+
+      queue_add(q, left);
+    }
+
+    i++;
+
+    if (i >= len) {
+      break;
+    }
+
+    if (a[i] != 0) {
+      TreeNode* right = malloc(sizeof(TreeNode));
+      right->val = a[i];
+      right->left = 0;
+      right->right = 0;
+
+      one->right = right;
+
+      queue_add(q, right);
+    }
+
+    i++;
+  }
+
+  queue_destroy(q);
+
+  return root;
+}
+
+void tree_clean(TreeNode* root) {
+
+  if (root == 0) {
+    return;
+  }
+
+  queue* q = queue_create(1000);
+  queue_add(q, root);
+
+  while (1) {
+    TreeNode* one = queue_delete(q);
+    if (one == 0) {
+      break;
+    }
+
+    if (one->left != 0) {
+      queue_add(q, one->left);
+    }
+
+    if (one->right != 0) {
+      queue_add(q, one->right);
+    }
+
+    free(one);
+  }
+
+  queue_destroy(q);
+}

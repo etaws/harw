@@ -6,6 +6,10 @@
 #include <stdint.h>
 
 typedef struct TreeNode TreeNode;
+
+TreeNode* tree_create(const int a[], size_t len);
+void tree_clean(TreeNode* root);
+
 typedef struct tree tree;
 
 tree* tree_new(void);

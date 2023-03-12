@@ -1,4 +1,5 @@
 #include "ds/list.h"
+#include "ds/queue.h"
 #include "ds/seek_two.h"
 #include "ds/tree.h"
 
