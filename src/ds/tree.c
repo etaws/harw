@@ -554,7 +554,45 @@ void tree_reverse(tree* t) {
   data_reverse_2(t->root, t->size);
 }
 
-int* inorder_traversal(struct TreeNode* root, int* returnSize) { return 0; }
+int* inorder_traversal(struct TreeNode* root, int* returnSize) {
+
+  size_t max_size = 101;
+
+  int* r = malloc(max_size * sizeof(int));
+
+  TreeNode** a = malloc(max_size * sizeof(TreeNode*));
+  for (size_t j = 0; j < max_size; ++j) {
+    a[j] = 0;
+    r[j] = 0;
+  }
+
+  size_t i = 0;
+  size_t r_i = 0;
+  TreeNode* current = root;
+
+  while (1) {
+    while (current != 0) {
+      a[i++] = current;
+      current = current->left;
+    }
+
+    if (i == 0) {
+      break;
+    }
+
+    i -= 1;
+    current = a[i];
+    r[r_i++] = current->val;
+
+    current = current->right;
+  }
+
+  (*returnSize) = r_i;
+
+  free(a);
+
+  return r;
+}
 
 TreeNode* tree_create(const int a[], size_t len) {
 

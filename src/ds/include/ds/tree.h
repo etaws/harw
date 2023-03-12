@@ -10,6 +10,8 @@ typedef struct TreeNode TreeNode;
 TreeNode* tree_create(const int a[], size_t len);
 void tree_clean(TreeNode* root);
 
+int* inorder_traversal(struct TreeNode* root, int* returnSize);
+
 typedef struct tree tree;
 
 tree* tree_new(void);
