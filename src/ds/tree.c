@@ -634,6 +634,57 @@ int* preorder_traversal(struct TreeNode* root, int* returnSize) {
   return r;
 }
 
+int* postorder_traversal(struct TreeNode* root, int* returnSize) {
+  size_t max_size = 101;
+
+  int* r = malloc(max_size * sizeof(int));
+
+  TreeNode** a = malloc(max_size * sizeof(TreeNode*));
+  for (size_t j = 0; j < max_size; ++j) {
+    a[j] = 0;
+    r[j] = 0;
+  }
+
+  size_t i = 0;
+  size_t r_i = 0;
+  TreeNode* current = root;
+  TreeNode* pre_done = 0;
+
+  while (1) {
+    while (current != 0) {
+      a[i++] = current;
+      current = current->left;
+    }
+
+    if (i == 0) {
+      break;
+    }
+
+    i -= 1;
+    current = a[i];
+
+    if (current->right == 0) {
+      r[r_i++] = current->val;
+      pre_done = current;
+      current = 0;
+    } else if (current->right == pre_done) {
+      r[r_i++] = current->val;
+      pre_done = current;
+      current = 0;
+    } else {
+      a[i++] = current;
+      pre_done = 0;
+      current = current->right;
+    }
+  }
+
+  (*returnSize) = r_i;
+
+  free(a);
+
+  return r;
+}
+
 TreeNode* tree_create(const int a[], size_t len) {
 
   if (len < 1) {
