@@ -13,6 +13,7 @@ void tree_clean(TreeNode* root);
 int* inorder_traversal(struct TreeNode* root, int* returnSize);
 int* preorder_traversal(struct TreeNode* root, int* returnSize);
 int* postorder_traversal(struct TreeNode* root, int* returnSize);
+bool is_symmetric(struct TreeNode* root);
 
 typedef struct tree tree;
 

@@ -62,3 +62,17 @@ TEST(tree, tree_3) {
 
   tree_clean(root);
 }
+
+TEST(tree, tree_4) {
+
+  // int a[] = {1, 2, 2, 0, 3, 0, 3};
+  int a[] = {1, 2, 2, 3, 4, 4, 3};
+
+  TreeNode* root = tree_create(a, sizeof(a) / sizeof(a[0]));
+
+  bool ok = is_symmetric(root);
+
+  REQUIRE(ok);
+
+  tree_clean(root);
+}

@@ -462,14 +462,16 @@ bool data_mirror_v2(data* d1, data* d2, size_t len) {
 
     if ((left->left != 0) && (right->right != 0)) {
       if (left->left->v != right->right->v) {
-        return false;
+        r = false;
+        break;
       }
       queue_add(q, left->left);
       queue_add(q, right->right);
     }
     if ((left->right != 0) && (right->left != 0)) {
       if (left->right->v != right->left->v) {
-        return false;
+        r = false;
+        break;
       }
       queue_add(q, left->right);
       queue_add(q, right->left);
@@ -683,6 +685,90 @@ int* postorder_traversal(struct TreeNode* root, int* returnSize) {
   free(a);
 
   return r;
+}
+
+bool is_symmetric(struct TreeNode* root) {
+
+  if (root == 0) {
+    return true;
+  }
+
+  if ((root->right == 0) && (root->left == 0)) {
+    return true;
+  }
+
+  if ((root->right == 0) || (root->left == 0)) {
+    return false;
+  }
+
+  if ((root->right->val != root->left->val)) {
+    return false;
+  }
+
+  queue* q = queue_create(1000);
+
+  queue_add(q, root->left);
+  queue_add(q, root->right);
+
+  bool re = true;
+  while (1) {
+
+    if (queue_len(q) == 0) {
+      re = true;
+      break;
+    }
+
+    struct TreeNode* left = queue_delete(q);
+    struct TreeNode* right = queue_delete(q);
+
+    if ((left->right == 0) && (right->left != 0)) {
+      re = false;
+      break;
+    }
+
+    if ((left->right != 0) && (right->left == 0)) {
+      re = false;
+      break;
+    }
+
+    if ((left->right != 0) && (right->left != 0) &&
+        (left->right->val != right->left->val)) {
+      re = false;
+      break;
+    }
+
+    if ((left->right != 0) && (right->left != 0) &&
+        (left->right->val == right->left->val)) {
+      queue_add(q, left->right);
+      queue_add(q, right->left);
+    }
+
+    if ((left->left == 0) && (right->right != 0)) {
+      re = false;
+      break;
+    }
+
+    if ((left->left != 0) && (right->right == 0)) {
+      re = false;
+      break;
+    }
+
+    if ((left->left != 0) && (right->right != 0) &&
+        (left->left->val != right->right->val)) {
+      re = false;
+      break;
+    }
+
+    if ((left->left != 0) && (right->right != 0) &&
+        (left->left->val == right->right->val)) {
+      queue_add(q, left->left);
+      queue_add(q, right->right);
+    }
+  }
+
+  queue_destroy(q);
+
+  return re;
 }
 
 TreeNode* tree_create(const int a[], size_t len) {
