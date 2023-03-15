@@ -76,3 +76,16 @@ TEST(tree, tree_4) {
 
   tree_clean(root);
 }
+
+TEST(tree, tree_5) {
+
+  int a[] = {3, 9, 20, 0, 0, 15, 7};
+
+  TreeNode* root = tree_create(a, sizeof(a) / sizeof(a[0]));
+
+  int r = max_depth(root);
+
+  REQUIRE_EQ(r, 3);
+
+  tree_clean(root);
+}

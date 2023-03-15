@@ -863,3 +863,41 @@ void tree_clean(TreeNode* root) {
 
   queue_destroy(q);
 }
+
+int max_depth(struct TreeNode* root) {
+
+  if (root == 0) {
+    return 0;
+  }
+
+  queue* q = queue_create(100);
+  queue_add(q, root);
+  int current_size = 1;
+
+  size_t r = 0;
+
+  while (1) {
+    if (queue_len(q) == 0) {
+      break;
+    }
+    int next_size = 0;
+    for (int i = 0; i < current_size; ++i) {
+      TreeNode* one = queue_delete(q);
+      if (one->right != 0) {
+        queue_add(q, one->right);
+        next_size++;
+      }
+      if (one->left != 0) {
+        queue_add(q, one->left);
+        next_size++;
+      }
+    }
+
+    current_size = next_size;
+
+    r++;
+  }
+
+  queue_destroy(q);
+  return r;
+}
