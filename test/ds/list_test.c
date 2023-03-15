@@ -89,3 +89,17 @@ TEST(tree, tree_5) {
 
   tree_clean(root);
 }
+
+TEST(tree, tree_6) {
+
+  int a[] = {1, 2, 2, 3, 3, 0, 0, 4, 4};
+  // int a[] = {3, 9, 20, 0, 0, 15, 7};
+
+  TreeNode* root = tree_create(a, sizeof(a) / sizeof(a[0]));
+
+  bool r = is_balanced(root);
+
+  REQUIRE(!r);
+
+  tree_clean(root);
+}

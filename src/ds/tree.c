@@ -901,3 +901,37 @@ int max_depth(struct TreeNode* root) {
   queue_destroy(q);
   return r;
 }
+
+static bool depth_balanced(struct TreeNode* root, int* depth) {
+  if (root == 0) {
+    *depth = 0;
+    return true;
+  }
+
+  int left_depth;
+  int right_depth;
+
+  bool left_ok = depth_balanced(root->left, &left_depth);
+  bool right_ok = depth_balanced(root->right, &right_depth);
+
+  if (!left_ok || !right_ok) {
+    return false;
+  }
+
+  int diff = left_depth - right_depth;
+  if (diff <= 1 && diff >= -1) {
+    if (left_depth > right_depth) {
+      (*depth) = left_depth + 1;
+    } else {
+      (*depth) = right_depth + 1;
+    }
+    return true;
+  } else {
+    return false;
+  }
+}
+
+bool is_balanced(struct TreeNode* root) {
+  int depth = 0;
+  return depth_balanced(root, &depth);
+}
