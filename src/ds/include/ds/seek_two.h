@@ -13,4 +13,6 @@ size_t seek_two_tuple_two(int_tuple* t);
 
 void seek_two_clear(int_tuple* t);
 
+void merge(int* nums1, int nums1Size, int m, int* nums2, int nums2Size, int n);
+
 #endif

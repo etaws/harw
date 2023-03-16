@@ -190,3 +190,18 @@ TEST(e, seek_two_3) {
 
   seek_two_clear(r);
 }
+
+TEST(e, merge) {
+
+  int a[] = {1, 2, 3, 0, 0, 0};
+  int b[] = {2, 5, 6};
+
+  merge(a, 6, 3, b, 3, 3);
+
+  REQUIRE_EQ(a[0], 1);
+  REQUIRE_EQ(a[1], 2);
+  REQUIRE_EQ(a[2], 2);
+  REQUIRE_EQ(a[3], 3);
+  REQUIRE_EQ(a[4], 5);
+  REQUIRE_EQ(a[5], 6);
+}
