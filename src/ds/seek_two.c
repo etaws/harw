@@ -74,3 +74,20 @@ void merge(int* nums1, int nums1Size, int m, int* nums2, int nums2Size, int n) {
     nums1[k--] = nums2[j--];
   }
 }
+
+void bubbling_sort(int a[], size_t len) {
+
+  if (len <= 1) {
+    return;
+  }
+
+  for (size_t i = len - 1; i >= 1; i--) {
+    for (size_t j = 0; j < i; j++) {
+      if (a[j] > a[j + 1]) {
+        int t = a[j];
+        a[j] = a[j + 1];
+        a[j + 1] = t;
+      }
+    }
+  }
+}

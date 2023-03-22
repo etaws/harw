@@ -205,3 +205,17 @@ TEST(e, merge) {
   REQUIRE_EQ(a[4], 5);
   REQUIRE_EQ(a[5], 6);
 }
+
+TEST(e, bubbling_sort) {
+
+  int a[] = {2, 1, 3, 0, 0, 0};
+
+  bubbling_sort(a, sizeof(a) / sizeof(a[0]));
+
+  REQUIRE_EQ(a[0], 0);
+  REQUIRE_EQ(a[1], 0);
+  REQUIRE_EQ(a[2], 0);
+  REQUIRE_EQ(a[3], 1);
+  REQUIRE_EQ(a[4], 2);
+  REQUIRE_EQ(a[5], 3);
+}
