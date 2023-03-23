@@ -219,3 +219,25 @@ TEST(e, bubbling_sort) {
   REQUIRE_EQ(a[4], 2);
   REQUIRE_EQ(a[5], 3);
 }
+
+TEST(e, quick_sort) {
+
+  int n[] = {5, 1, 26, 37, 61, 11, 15, 19, 59, 48};
+
+  int ret = 0;
+  int* a = sortArray(n, sizeof(n) / sizeof(a[0]), &ret);
+
+  // 1, 5, 11, 15, 19, 26, 37, 48, 59, 61
+  REQUIRE_EQ(a[0], 1);
+  REQUIRE_EQ(a[1], 5);
+  REQUIRE_EQ(a[2], 11);
+  REQUIRE_EQ(a[3], 15);
+  REQUIRE_EQ(a[4], 19);
+  REQUIRE_EQ(a[5], 26);
+  REQUIRE_EQ(a[6], 37);
+  REQUIRE_EQ(a[7], 48);
+  REQUIRE_EQ(a[8], 59);
+  REQUIRE_EQ(a[9], 61);
+
+  free(a);
+}

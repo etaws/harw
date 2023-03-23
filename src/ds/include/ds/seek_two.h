@@ -17,4 +17,6 @@ void merge(int* nums1, int nums1Size, int m, int* nums2, int nums2Size, int n);
 
 void bubbling_sort(int a[], size_t len);
 
+int* sortArray(int* nums, int numsSize, int* returnSize);
+
 #endif

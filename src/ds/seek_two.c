@@ -91,3 +91,75 @@ void bubbling_sort(int a[], size_t len) {
     }
   }
 }
+
+static void q_sort(int a[], size_t left, size_t right);
+
+void q_sort(int a[], size_t left, size_t right) {
+
+  if (left >= right) {
+    return;
+  }
+
+  size_t i = left;
+  size_t j = right + 1;
+
+  size_t len = right - left + 1;
+  size_t p = rand() % len + left;
+  int v = a[p];
+  a[p] = a[left];
+  a[left] = v;
+
+  while (1) {
+    while (1) {
+      i++;
+      if ((i == right) || (a[i] >= a[left])) {
+        break;
+      }
+    }
+
+    while (1) {
+      j--;
+      if ((j == left) || (a[left] >= a[j])) {
+        break;
+      }
+    }
+
+    if (i < j) {
+      int t = a[i];
+      a[i] = a[j];
+      a[j] = t;
+    }
+
+    if (i >= j) {
+      break;
+    }
+  }
+
+  int s = a[left];
+  a[left] = a[j];
+  a[j] = s;
+
+  if ((left + 1) < j) {
+    q_sort(a, left, j - 1);
+  }
+  if ((j + 1) < right) {
+    q_sort(a, j + 1, right);
+  }
+}
+
+int* sortArray(int* nums, int numsSize, int* returnSize) {
+  int* r = malloc(sizeof(int) * numsSize);
+  *returnSize = numsSize;
+
+  for (size_t k = 0; k < numsSize; ++k) {
+    r[k] = nums[k];
+  }
+
+  if (numsSize <= 1) {
+    return r;
+  }
+
+  q_sort(r, 0, numsSize - 1);
+
+  return r;
+}
