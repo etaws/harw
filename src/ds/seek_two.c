@@ -163,3 +163,38 @@ int* sortArray(int* nums, int numsSize, int* returnSize) {
 
   return r;
 }
+
+int findKthLargest(int* nums, int numsSize, int k) {
+  size_t off = 10000;
+  size_t len = 20001;
+  int* a = malloc(len * sizeof(int));
+  for (int i = 0; i < len; ++i) {
+    a[i] = 0;
+  }
+
+  for (int j = 0; j < numsSize; ++j) {
+    int v = nums[j];
+    a[v + off]++;
+  }
+
+  int t = 0;
+  size_t s = len - 1;
+  while (1) {
+    t += a[s];
+
+    if (t >= k) {
+      free(a);
+      return s - off;
+    }
+
+    if (s == 0) {
+      break;
+    }
+
+    s--;
+  }
+
+  free(a);
+
+  return 0;
+}

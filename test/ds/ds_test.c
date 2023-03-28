@@ -241,3 +241,12 @@ TEST(e, quick_sort) {
 
   free(a);
 }
+
+TEST(e, findKthLargest) {
+
+  int n[] = {99, 99};
+
+  int r = findKthLargest(n, sizeof(n) / sizeof(n[0]), 1);
+
+  REQUIRE_EQ(r, 99);
+}

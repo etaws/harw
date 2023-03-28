@@ -19,4 +19,6 @@ void bubbling_sort(int a[], size_t len);
 
 int* sortArray(int* nums, int numsSize, int* returnSize);
 
+int findKthLargest(int* nums, int numsSize, int k);
+
 #endif

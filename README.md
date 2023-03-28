@@ -2,6 +2,8 @@
 
 * how to build it?
 
+**注意：**本项目需要 C11 标准，否则不能通过编译
+
 ```shell
 cmake -D CMAKE_C_COMPILER=${tool}/llvm-14/bin/clang -DCMAKE_EXPORT_COMPILE_COMMANDS=1 -S . -B build
 cmake --build build
