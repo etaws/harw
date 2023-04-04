@@ -1,5 +1,6 @@
 #include "ds/seek_two.h"
 #include "ds/ht.h"
+#include "ds/map.h"
 
 #include <assert.h>
 #include <stdint.h>
@@ -17,14 +18,16 @@ int_tuple* seek_two_count(size_t len, int32_t a[len], int32_t target) {
   r->one = 0;
   r->two = 0;
 
-  ht* map = ht_create();
+  //  ht* map = ht_create();
+  hashmap* m = hashmap_create();
 
   for (size_t i = 0; i < len; ++i) {
 
     int32_t another = target - a[i];
 
-    int32_t v = ht_get(map, another);
-    if (v != -1) {
+    uintptr_t v = 0;
+    bool exit_it = hashmap_get(m, &another, sizeof(int32_t), &v);
+    if (exit_it) {
       if (i < (size_t)v) {
         r->one = i;
         r->two = (size_t)v;
@@ -32,15 +35,14 @@ int_tuple* seek_two_count(size_t len, int32_t a[len], int32_t target) {
         r->one = (size_t)v;
         r->two = i;
       }
-      ht_destroy(map);
+      hashmap_free(m);
       return r;
     }
 
-    int32_t set_ok = ht_set(map, a[i], (int32_t)i);
-    assert(set_ok >= 0);
+    hashmap_set(m, &a[i], sizeof(int32_t), i);
   }
 
-  ht_destroy(map);
+  hashmap_free(m);
 
   return r;
 }
