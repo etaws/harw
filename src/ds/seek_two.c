@@ -200,3 +200,134 @@ int findKthLargest(int* nums, int numsSize, int k) {
 
   return 0;
 }
+
+char* addStrings(char* num1, char* num2) {
+
+  if ((num1 == 0) || (num2 == 0)) {
+    return 0;
+  }
+
+  char* p = num1;
+  char* q = num2;
+
+  while (*p != '\0') {
+    p++;
+  }
+
+  if (p == num1) {
+    return 0;
+  }
+
+  while (*q != '\0') {
+    q++;
+  }
+
+  if (q == num2) {
+    return 0;
+  }
+
+  size_t len = p - num1;
+  if ((q - num2) > len) {
+    len = q - num2;
+  }
+
+  len += 2;
+
+  char* r = malloc(sizeof(char) * (len + 1));
+  for (int i = 0; i < len + 1; i++) {
+    r[i] = '\0';
+  }
+
+  p--;
+  q--;
+
+  char* last = &r[len - 1];
+  int up = 0;
+  while (1) {
+    int n1 = (*p) - '0';
+    int n2 = (*q) - '0';
+
+    int n3 = n1 + n2 + up;
+    char c = '0' + (n3 % 10);
+    *last = c;
+    last--;
+
+    if (n3 >= 10) {
+      up = 1;
+    } else {
+      up = 0;
+    }
+
+    if ((p != num1) && (q != num2)) {
+      p--;
+      q--;
+    } else {
+      break;
+    }
+  }
+
+  if (p != num1) {
+    while (1) {
+      p--;
+
+      int n1 = (*p) - '0' + up;
+
+      char c = '0' + (n1 % 10);
+      *last = c;
+      last--;
+
+      if (n1 >= 10) {
+        up = 1;
+      } else {
+        up = 0;
+      }
+
+      if (p == num1) {
+        break;
+      }
+    }
+  }
+
+  if (q != num2) {
+    while (1) {
+      q--;
+
+      int n2 = (*q) - '0' + up;
+
+      char c = '0' + (n2 % 10);
+      *last = c;
+      last--;
+
+      if (n2 >= 10) {
+        up = 1;
+      } else {
+        up = 0;
+      }
+
+      if (q == num2) {
+        break;
+      }
+    }
+  }
+
+  if (up == 1) {
+    *last = '1';
+  }
+
+  char* k = r;
+  while (*k == '\0') {
+    k++;
+  }
+
+  char* l = r;
+  while (*k != '\0') {
+    *l = *k;
+
+    k++;
+    l++;
+  }
+
+  *l = '\0';
+
+  return r;
+}

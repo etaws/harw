@@ -21,4 +21,6 @@ int* sortArray(int* nums, int numsSize, int* returnSize);
 
 int findKthLargest(int* nums, int numsSize, int k);
 
+char* addStrings(char* num1, char* num2);
+
 #endif

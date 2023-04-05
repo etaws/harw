@@ -250,3 +250,72 @@ TEST(e, findKthLargest) {
 
   REQUIRE_EQ(r, 99);
 }
+
+TEST(e, addStrings_0) {
+
+  char* r = addStrings(0, 0);
+
+  REQUIRE_EQ(r, 0);
+}
+
+TEST(e, addStrings_1) {
+
+  char n1[] = "";
+  char n2[] = "";
+
+  char* r = addStrings(n1, n2);
+  REQUIRE_EQ(r, 0);
+}
+
+TEST(e, addStrings_2) {
+
+  char n1[] = {'0', '\0'};
+  char n2[] = {'0', '\0'};
+
+  char* r = addStrings(n1, n2);
+
+  REQUIRE(r != 0);
+
+  REQUIRE_EQ(r[0], '0');
+  REQUIRE_EQ(r[1], '\0');
+
+  free(r);
+
+  r = 0;
+}
+
+TEST(e, addStrings_3) {
+
+  char n1[] = "9";
+  char n2[] = "99";
+
+  char* r = addStrings(n1, n2);
+
+  REQUIRE(r != 0);
+
+  REQUIRE_EQ(r[0], '1');
+  REQUIRE_EQ(r[1], '0');
+  REQUIRE_EQ(r[2], '8');
+  REQUIRE_EQ(r[3], '\0');
+
+  free(r);
+  r = 0;
+}
+
+TEST(e, addStrings_4) {
+
+  char n1[] = "11";
+  char n2[] = "123";
+
+  char* r = addStrings(n1, n2);
+
+  REQUIRE(r != 0);
+
+  REQUIRE_EQ(r[0], '1');
+  REQUIRE_EQ(r[1], '3');
+  REQUIRE_EQ(r[2], '4');
+  REQUIRE_EQ(r[3], '\0');
+
+  free(r);
+  r = 0;
+}
