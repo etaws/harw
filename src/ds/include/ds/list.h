@@ -7,8 +7,9 @@
 
 typedef struct ListNode ListNode;
 
-ListNode* list_node_create(int a[], size_t len);
+ListNode* list_node_create(size_t len, int a[len]);
 void list_node_clean(ListNode* head);
+size_t list_to_array(ListNode* head, size_t len, int a[len]);
 
 typedef struct list list;
 

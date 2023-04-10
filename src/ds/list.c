@@ -436,7 +436,7 @@ struct ListNode* middle_node(struct ListNode* head) {
   return 0;
 }
 
-ListNode* list_node_create(int a[], size_t len) {
+ListNode* list_node_create(size_t len, int a[len]) {
 
   ListNode* head = 0;
   ListNode* tail = 0;
@@ -465,4 +465,22 @@ void list_node_clean(ListNode* head) {
     c = c->next;
     free(t);
   }
+}
+
+struct ListNode* addTwoNumbers(struct ListNode* l1, struct ListNode* l2) {
+
+  return 0;
+}
+
+size_t list_to_array(ListNode* head, size_t len, int a[len]) {
+
+  ListNode* p = head;
+
+  size_t i = 0;
+  while (p) {
+    a[i++] = p->val;
+    p = p->next;
+  }
+
+  return i;
 }
