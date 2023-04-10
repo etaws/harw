@@ -469,7 +469,78 @@ void list_node_clean(ListNode* head) {
 
 struct ListNode* addTwoNumbers(struct ListNode* l1, struct ListNode* l2) {
 
-  return 0;
+  ListNode* head = 0;
+  ListNode* tail = head;
+
+  ListNode* p = l1;
+  ListNode* q = l2;
+  int up = 0;
+
+  while (p && q) {
+
+    int c = p->val + q->val + up;
+    if (c >= 10) {
+      up = 1;
+    } else {
+      up = 0;
+    }
+
+    if (head == 0) {
+      head = malloc(sizeof(ListNode));
+      tail = head;
+    } else {
+      tail->next = malloc(sizeof(ListNode));
+      tail = tail->next;
+    }
+
+    tail->next = 0;
+    tail->val = c % 10;
+
+    p = p->next;
+    q = q->next;
+  }
+
+  ListNode* cn = p;
+  if (q) {
+    cn = q;
+  }
+
+  while (cn) {
+    int c = cn->val + up;
+    if (c >= 10) {
+      up = 1;
+    } else {
+      up = 0;
+    }
+
+    if (head == 0) {
+      head = malloc(sizeof(ListNode));
+      tail = head;
+    } else {
+      tail->next = malloc(sizeof(ListNode));
+      tail = tail->next;
+    }
+
+    tail->next = 0;
+    tail->val = c % 10;
+
+    cn = cn->next;
+  }
+
+  if (up == 1) {
+    if (head == 0) {
+      head = malloc(sizeof(ListNode));
+      tail = head;
+    } else {
+      tail->next = malloc(sizeof(ListNode));
+      tail = tail->next;
+    }
+
+    tail->next = 0;
+    tail->val = 1;
+  }
+
+  return head;
 }
 
 size_t list_to_array(ListNode* head, size_t len, int a[len]) {
