@@ -5,6 +5,7 @@
 #include <assert.h>
 #include <stdint.h>
 #include <stdlib.h>
+#include <string.h>
 
 struct int_tuple {
   size_t one;
@@ -330,4 +331,47 @@ char* addStrings(char* num1, char* num2) {
   *l = '\0';
 
   return r;
+}
+
+struct NumArray {
+  int* nums;
+};
+
+NumArray* numArrayCreate(int* nums, int numsSize) {
+  NumArray* r = malloc(sizeof(NumArray));
+  r->nums = malloc(sizeof(int) * (numsSize + 1));
+
+  int* p = nums;
+  int* t = nums + numsSize;
+  int* k = r->nums;
+  *k = 0;
+  int* q = k + 1;
+
+  while (p != t) {
+    *q++ = *p++ + *k++;
+  }
+
+  return r;
+}
+
+int numArraySumRange(NumArray* obj, int left, int right) {
+  if (obj == 0) {
+    return 0;
+  }
+
+  return obj->nums[right + 1] - obj->nums[left];
+}
+
+void numArrayFree(NumArray* obj) {
+
+  if (obj == 0) {
+    return;
+  }
+
+  if (obj->nums != 0) {
+    free(obj->nums);
+  }
+
+  free(obj);
+  obj = 0;
 }

@@ -23,4 +23,12 @@ int findKthLargest(int* nums, int numsSize, int k);
 
 char* addStrings(char* num1, char* num2);
 
+typedef struct NumArray NumArray;
+
+NumArray* numArrayCreate(int* nums, int numsSize);
+
+int numArraySumRange(NumArray* obj, int left, int right);
+
+void numArrayFree(NumArray* obj);
+
 #endif
