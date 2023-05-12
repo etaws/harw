@@ -23,4 +23,6 @@ void list_insert(list* l, uint16_t v);
 
 void list_reverse(list* l);
 
+struct ListNode* removeNthFromEnd(struct ListNode* head, int n);
+
 #endif

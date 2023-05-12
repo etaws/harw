@@ -161,3 +161,34 @@ TEST(tree, list_3) {
   REQUIRE_EQ(len, 8);
   REQUIRE_EQ(c[0], 8);
 }
+
+TEST(tree, list_4) {
+
+  int a[] = {1, 2, 3, 4, 5};
+  ListNode* l1 = list_node_create(sizeof(a) / sizeof(a[0]), a);
+
+  ListNode* d = removeNthFromEnd(l1, 2);
+
+  size_t len = list_to_array(d, 4, a);
+  REQUIRE_EQ(len, 4);
+  REQUIRE_EQ(a[0], 1);
+  REQUIRE_EQ(a[1], 2);
+  REQUIRE_EQ(a[2], 3);
+  REQUIRE_EQ(a[3], 5);
+
+  list_node_clean(l1);
+}
+
+TEST(tree, list_5) {
+
+  int a[] = {1, 2};
+  ListNode* l1 = list_node_create(sizeof(a) / sizeof(a[0]), a);
+
+  ListNode* d = removeNthFromEnd(l1, 2);
+
+  size_t len = list_to_array(d, 2, a);
+  REQUIRE_EQ(len, 1);
+  REQUIRE_EQ(a[0], 2);
+
+  list_node_clean(l1);
+}

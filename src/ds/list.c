@@ -555,3 +555,50 @@ size_t list_to_array(ListNode* head, size_t len, int a[len]) {
 
   return i;
 }
+
+struct ListNode* removeNthFromEnd(struct ListNode* head, int n) {
+
+  if (head == 0) {
+    return 0;
+  }
+
+  int i = 0;
+
+  struct ListNode* p = head;
+  while (i < (n - 1)) {
+
+    if (p->next == 0) {
+      break;
+    }
+
+    p = p->next;
+
+    i++;
+  }
+
+  if (i < (n - 1)) {
+    return 0;
+  }
+
+  struct ListNode* pre = head;
+  struct ListNode* q = head;
+  while (p->next != 0) {
+    if (q != head) {
+      pre = pre->next;
+    }
+
+    q = q->next;
+    p = p->next;
+  }
+
+  if (q == head) {
+    return q->next;
+  }
+
+  struct ListNode* r = pre->next;
+  pre->next = r->next;
+
+  free(r);
+
+  return head;
+}
