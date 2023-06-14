@@ -659,6 +659,30 @@ struct Node* copyRandomList(struct Node* head) {
   return cur;
 }
 
+ListNode* swapPairs(ListNode* head) {
+
+  if (head == 0) {
+    return 0;
+  }
+
+  if (head->next == 0) {
+    return head;
+  }
+
+  ListNode* first = head;
+  ListNode* second = head->next;
+
+  ListNode* more = swapPairs(second->next);
+
+  ListNode* new_first = second;
+  ListNode* new_second = first;
+  new_first->next = new_second;
+
+  new_second->next = more;
+
+  return new_first;
+}
+
 size_t listNode_len(struct ListNode* head) {
   size_t len = 0;
 

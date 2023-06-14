@@ -263,6 +263,21 @@ TEST(list, list_10) {
   REQUIRE_EQ(a[33], -890);
   REQUIRE_EQ(a[34], -888);
   REQUIRE_EQ(a[35], -886);
+}
+
+TEST(tree, list_7) {
+
+  int a[] = {1, 2, 3, 4};
+  ListNode* l1 = list_node_create(sizeof(a) / sizeof(a[0]), a);
+
+  ListNode* d = swapPairs(l1);
+
+  size_t len = list_to_array(d, 4, a);
+  REQUIRE_EQ(len, 4);
+  REQUIRE_EQ(a[0], 2);
+  REQUIRE_EQ(a[1], 1);
+  REQUIRE_EQ(a[2], 4);
+  REQUIRE_EQ(a[3], 3);
 
   list_node_clean(l1);
 }

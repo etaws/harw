@@ -27,4 +27,6 @@ struct ListNode* removeNthFromEnd(struct ListNode* head, int n);
 
 struct ListNode* sortList(struct ListNode* head);
 
+struct ListNode* swapPairs(struct ListNode* head);
+
 #endif
