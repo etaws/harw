@@ -935,3 +935,23 @@ bool is_balanced(struct TreeNode* root) {
   int depth = 0;
   return depth_balanced(root, &depth);
 }
+
+struct TreeNode* mid_tree(int* nums, int left, int right) {
+
+  if (left > right) {
+    return 0;
+  }
+
+  int mid = (left + right) / 2;
+
+  struct TreeNode* root = malloc(sizeof(TreeNode));
+  root->val = nums[mid];
+  root->left = mid_tree(nums, left, mid - 1);
+  root->right = mid_tree(nums, mid + 1, right);
+
+  return root;
+}
+
+struct TreeNode* sortedArrayToBST(int* nums, int numsSize) {
+  return mid_tree(nums, 0, numsSize - 1);
+}
