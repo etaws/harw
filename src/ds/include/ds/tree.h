@@ -16,6 +16,8 @@ int* postorder_traversal(struct TreeNode* root, int* returnSize);
 bool is_symmetric(struct TreeNode* root);
 int max_depth(struct TreeNode* root);
 bool is_balanced(struct TreeNode* root);
+bool isValidBST(struct TreeNode* root);
+TreeNode* sortedArrayToBST(int* nums, int numsSize);
 
 typedef struct tree tree;
 

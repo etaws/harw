@@ -105,6 +105,19 @@ TEST(tree, tree_6) {
   tree_clean(root);
 }
 
+TEST(tree, tree_7) {
+
+  int a[] = {2, 2, 2};
+
+  struct TreeNode* root = tree_create(a, sizeof(a) / sizeof(a[0]));
+
+  bool r = isValidBST(root);
+
+  REQUIRE(!r);
+
+  tree_clean(root);
+}
+
 static size_t add_two_ts(size_t al, int a[al], size_t bl, int b[bl], size_t cl,
                          int c[cl]) {
 

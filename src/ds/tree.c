@@ -955,3 +955,55 @@ struct TreeNode* mid_tree(int* nums, int left, int right) {
 struct TreeNode* sortedArrayToBST(int* nums, int numsSize) {
   return mid_tree(nums, 0, numsSize - 1);
 }
+
+static bool valid_with(struct TreeNode* root, int* min, int* max) {
+  if (root == 0) {
+    *max = 0;
+    *min = 0;
+    return true;
+  }
+
+  int c = root->val;
+  *max = c;
+  *min = c;
+
+  if (root->left != 0) {
+    int l = 0;
+    int r = 0;
+    bool is_left = valid_with(root->left, &l, &r);
+
+    if (!is_left) {
+      return false;
+    }
+
+    if (c <= r) {
+      return false;
+    }
+
+    *min = l;
+  }
+
+  if (root->right != 0) {
+    int l = 0;
+    int r = 0;
+    bool is_right = valid_with(root->right, &l, &r);
+
+    if (!is_right) {
+      return false;
+    }
+
+    if (c >= l) {
+      return false;
+    }
+
+    *max = r;
+  }
+
+  return true;
+}
+
+bool isValidBST(struct TreeNode* root) {
+  int max = 0;
+  int min = 0;
+  return valid_with(root, &min, &max);
+}
