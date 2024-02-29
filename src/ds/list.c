@@ -11,6 +11,12 @@ struct ListNode {
 
 typedef struct node node;
 
+struct Node {
+  int val;
+  struct Node* next;
+  struct Node* random;
+};
+
 struct node {
   uint16_t v;
 
@@ -601,4 +607,54 @@ struct ListNode* removeNthFromEnd(struct ListNode* head, int n) {
   free(r);
 
   return head;
+}
+
+struct Node* copyRandomList(struct Node* head) {
+
+  if (head == 0) {
+    return 0;
+  }
+
+  struct Node* p = head;
+
+  while (p != 0) {
+    struct Node* copy_it = malloc(sizeof(struct Node));
+    copy_it->next = p->next;
+    copy_it->random = p->random;
+    copy_it->val = p->val;
+
+    p->next = copy_it;
+
+    p = copy_it->next;
+  }
+
+  p = head;
+  struct Node* q = head->next;
+  while (p != 0) {
+    if (q->random != 0) {
+      q->random = q->random->next;
+    }
+    if (q->next == 0) {
+      break;
+    }
+    p = q->next;
+    q = p->next;
+  }
+
+  p = head;
+  struct Node* cur = head->next;
+  q = cur;
+  while (p != 0) {
+    p->next = q->next;
+    p = q->next;
+
+    if (q->next == 0) {
+      break;
+    }
+
+    q->next = p->next;
+    q = q->next;
+  }
+
+  return cur;
 }
