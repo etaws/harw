@@ -282,3 +282,26 @@ TEST(tree, list_8) {
 
   lRUCacheFree(cache);
 }
+
+TEST(tree, list_9) {
+
+  int a[] = {5, -1, 9, 4, 7, -188, 6};
+
+  size_t len = sizeof(a) / sizeof(a[0]);
+
+  ListNode* l1 = list_node_create(len, a);
+
+  ListNode* r = sortList(l1);
+
+  size_t list_len = list_to_array(r, len, a);
+  REQUIRE_EQ(list_len, len);
+  REQUIRE_EQ(a[0], -188);
+  REQUIRE_EQ(a[1], -1);
+  REQUIRE_EQ(a[2], 4);
+  REQUIRE_EQ(a[3], 5);
+  REQUIRE_EQ(a[4], 6);
+  REQUIRE_EQ(a[5], 7);
+  REQUIRE_EQ(a[6], 9);
+
+  list_node_clean(l1);
+}
