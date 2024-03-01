@@ -658,3 +658,51 @@ struct Node* copyRandomList(struct Node* head) {
 
   return cur;
 }
+
+struct ListNode* mergeTwoLists(struct ListNode* list1, struct ListNode* list2) {
+  if (list1 == 0) {
+    return list2;
+  }
+
+  if (list2 == 0) {
+    return list1;
+  }
+
+  struct ListNode* p = list1;
+  struct ListNode* q = list2;
+
+  struct ListNode* r = 0;
+  if (p->val <= q->val) {
+    r = p;
+    p = p->next;
+  } else {
+    r = q;
+    q = q->next;
+  }
+  r->next = 0;
+
+  struct ListNode* cur = r;
+
+  while ((p != 0) && (q != 0)) {
+    if (p->val <= q->val) {
+      cur->next = p;
+      p = p->next;
+    } else {
+      cur->next = q;
+      q = q->next;
+    }
+
+    cur = cur->next;
+    cur->next = 0;
+  }
+
+  if (p != 0) {
+    cur->next = p;
+  }
+
+  if (q != 0) {
+    cur->next = q;
+  }
+
+  return r;
+}
