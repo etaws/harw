@@ -208,7 +208,7 @@ TEST(tree, list_5) {
 
 TEST(tree, list_6) {
 
-  DListNode* dummy = dlist_init(7);
+  DListNode* dummy = dlist_init();
 
   dlist_add_to_first(dummy, 8, 1);
   dlist_add_to_first(dummy, 10, 3);
@@ -239,6 +239,46 @@ TEST(tree, list_7) {
 
   v1 = lRUCacheGet(cache, 1);
   REQUIRE_EQ(v1, -1);
+
+  int v3 = lRUCacheGet(cache, 100);
+  REQUIRE_EQ(v3, -1);
+  lRUCachePut(cache, 100, 72);
+  v3 = lRUCacheGet(cache, 100);
+  REQUIRE_EQ(v3, 72);
+
+  lRUCacheFree(cache);
+}
+
+TEST(tree, list_8) {
+
+  LRUCache* cache = lRUCacheCreate(2);
+
+  int v1 = lRUCacheGet(cache, 1);
+  REQUIRE_EQ(v1, -1);
+
+  lRUCachePut(cache, 1, 5);
+  v1 = lRUCacheGet(cache, 1);
+  REQUIRE_EQ(v1, 5);
+
+  lRUCachePut(cache, 1, 6);
+  v1 = lRUCacheGet(cache, 1);
+  REQUIRE_EQ(v1, 6);
+
+  lRUCachePut(cache, 2, 9);
+  int v2 = lRUCacheGet(cache, 2);
+  REQUIRE_EQ(v2, 9);
+
+  v1 = lRUCacheGet(cache, 1);
+  REQUIRE_EQ(v1, 6);
+
+  int v3 = lRUCacheGet(cache, 100);
+  REQUIRE_EQ(v3, -1);
+  lRUCachePut(cache, 100, 72);
+  v3 = lRUCacheGet(cache, 100);
+  REQUIRE_EQ(v3, 72);
+
+  v2 = lRUCacheGet(cache, 2);
+  REQUIRE_EQ(v2, -1);
 
   lRUCacheFree(cache);
 }

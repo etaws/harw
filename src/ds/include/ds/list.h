@@ -28,7 +28,7 @@ struct ListNode* removeNthFromEnd(struct ListNode* head, int n);
 
 typedef struct dlist dlist;
 
-DListNode* dlist_init();
+DListNode* dlist_init(void);
 void dlist_clean(DListNode* dummy);
 
 DListNode* dlist_add_to_first(DListNode* dummy,  int key, int val);

@@ -17,7 +17,7 @@ struct DListNode {
   struct DListNode* pre;
 };
 
-const int LRU_MAX_SIZE = 10000;
+#define LRU_MAX_SIZE 10000
 
 struct LRUCache {
   DListNode* dummy;
@@ -724,7 +724,7 @@ struct ListNode* mergeTwoLists(struct ListNode* list1, struct ListNode* list2) {
   return r;
 }
 
-DListNode* dlist_init() {
+DListNode* dlist_init(void) {
   DListNode* dummy = malloc(sizeof(struct DListNode));
   dummy->next = dummy;
   dummy->pre = dummy;
@@ -779,8 +779,7 @@ DListNode* dlist_add_to_first(DListNode* dummy, int key, int val) {
 void dlist_move_to_first(DListNode* dummy, DListNode* dnode) {
   assert((dnode != dummy) && (dnode->pre != 0));
 
-  if (dnode->next == dummy) {
-    assert(dummy->pre == dnode);
+  if (dnode->pre == dummy) {
     return;
   }
 
@@ -865,10 +864,11 @@ void lRUCachePut(LRUCache* obj, int key, int value) {
       int old_key = obj->dummy->pre->key;
       obj->hash[old_key] = 0;
       dlist_delete_tail(obj->dummy);
+      (obj->len)--;
     }
     DListNode* dnode = dlist_add_to_first(obj->dummy, key, value);
     obj->hash[key] = dnode;
-    obj->len++;
+    (obj->len)++;
     return;
   }
 
