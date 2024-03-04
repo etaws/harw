@@ -6,6 +6,7 @@
 #include <stdint.h>
 
 typedef struct ListNode ListNode;
+typedef struct DListNode DListNode;
 
 ListNode* list_node_create(size_t len, int a[len]);
 void list_node_clean(ListNode* head);
@@ -24,5 +25,22 @@ void list_insert(list* l, uint16_t v);
 void list_reverse(list* l);
 
 struct ListNode* removeNthFromEnd(struct ListNode* head, int n);
+
+typedef struct dlist dlist;
+
+DListNode* dlist_init();
+void dlist_clean(DListNode* dummy);
+
+DListNode* dlist_add_to_first(DListNode* dummy,  int key, int val);
+void dlist_move_to_first(DListNode* dummy, DListNode* dnode);
+
+void dlist_delete_tail(DListNode* dummy);
+
+typedef struct LRUCache LRUCache;
+
+LRUCache* lRUCacheCreate(int capacity);
+int lRUCacheGet(LRUCache* obj, int key);
+void lRUCachePut(LRUCache* obj, int key, int value);
+void lRUCacheFree(LRUCache* obj);
 
 #endif

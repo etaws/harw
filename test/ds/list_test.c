@@ -205,3 +205,40 @@ TEST(tree, list_5) {
 
   list_node_clean(l1);
 }
+
+TEST(tree, list_6) {
+
+  DListNode* dummy = dlist_init(7);
+
+  dlist_add_to_first(dummy, 8, 1);
+  dlist_add_to_first(dummy, 10, 3);
+  dlist_add_to_first(dummy, 100, 5);
+  dlist_add_to_first(dummy, 20, 7);
+
+  dlist_clean(dummy);
+}
+
+TEST(tree, list_7) {
+
+  LRUCache* cache = lRUCacheCreate(1);
+
+  int v1 = lRUCacheGet(cache, 1);
+  REQUIRE_EQ(v1, -1);
+
+  lRUCachePut(cache, 1, 5);
+  v1 = lRUCacheGet(cache, 1);
+  REQUIRE_EQ(v1, 5);
+
+  lRUCachePut(cache, 1, 6);
+  v1 = lRUCacheGet(cache, 1);
+  REQUIRE_EQ(v1, 6);
+
+  lRUCachePut(cache, 2, 9);
+  int v2 = lRUCacheGet(cache, 2);
+  REQUIRE_EQ(v2, 9);
+
+  v1 = lRUCacheGet(cache, 1);
+  REQUIRE_EQ(v1, -1);
+
+  lRUCacheFree(cache);
+}
