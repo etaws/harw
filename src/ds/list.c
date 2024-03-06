@@ -954,6 +954,9 @@ ListNode* mergeStep(ListNode* p, size_t step) {
       j++;
     }
 
+    if (p == 0) {
+      return 0;
+    }
     return p->next;
   }
 
