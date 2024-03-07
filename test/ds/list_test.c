@@ -378,10 +378,5 @@ TEST(tree, list_10) {
   REQUIRE_EQ(a[34], -888);
   REQUIRE_EQ(a[35], -886);
 
-  for (size_t i = 0; i < sizeof(a) / sizeof(a[0]); ++i) {
-    printf("%d ", a[i]);
-  }
-
-  printf("\n");
   list_node_clean(l1);
 }

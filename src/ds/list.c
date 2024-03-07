@@ -699,54 +699,6 @@ struct ListNode* goto_step(struct ListNode* p, size_t step) {
   return q;
 }
 
-struct ListNode* mergeTwoLists(struct ListNode* list1, struct ListNode* list2) {
-  if (list1 == 0) {
-    return list2;
-  }
-
-  if (list2 == 0) {
-    return list1;
-  }
-
-  struct ListNode* p = list1;
-  struct ListNode* q = list2;
-
-  struct ListNode* r = 0;
-  if (p->val <= q->val) {
-    r = p;
-    p = p->next;
-  } else {
-    r = q;
-    q = q->next;
-  }
-  r->next = 0;
-
-  struct ListNode* cur = r;
-
-  while ((p != 0) && (q != 0)) {
-    if (p->val <= q->val) {
-      cur->next = p;
-      p = p->next;
-    } else {
-      cur->next = q;
-      q = q->next;
-    }
-
-    cur = cur->next;
-    cur->next = 0;
-  }
-
-  if (p != 0) {
-    cur->next = p;
-  }
-
-  if (q != 0) {
-    cur->next = q;
-  }
-
-  return r;
-}
-
 DListNode* dlist_init(void) {
   DListNode* dummy = malloc(sizeof(struct DListNode));
   dummy->next = dummy;
@@ -900,17 +852,17 @@ void lRUCachePut(LRUCache* obj, int key, int value) {
   dlist_move_to_first(obj->dummy, v_node);
 }
 
-ListNode* mergeStep(ListNode* p, size_t step) {
+ListNode* mergeStep(ListNode* p, size_t len_i, size_t len_j) {
 
   ListNode* pp = p->next;
-  ListNode* qq = goto_step(pp, step);
+  ListNode* qq = goto_step(pp, len_i);
 
   size_t i = 0;
   size_t j = 0;
 
   ListNode* c_p = pp;
   ListNode* c_q = qq;
-  while ((i < step) && (j < step)) {
+  while ((i < len_i) && (j < len_j)) {
     if (c_p->val < c_q->val) {
       p->next = c_p;
       c_p = c_p->next;
@@ -926,40 +878,29 @@ ListNode* mergeStep(ListNode* p, size_t step) {
       p->next = 0;
       j++;
     }
-
-    if ((c_p == 0) || (c_q == 0)) {
-      break;
-    }
   }
 
-  if ((i == step) && (j == step)) {
-    return c_q;
-  } else if (i < step) {
+ if (i < len_i) {
     p->next = c_p;
     i++;
-    while (i < step) {
+    while (i < len_i) {
       c_p = c_p->next;
       i++;
     }
     c_p->next = c_q;
     return c_p;
-  } else if (j < step) {
+  } else if (j < len_j) {
     p->next = c_q;
     j++;
-    while (j < step) {
-      if (p == 0) {
-        return 0;
-      }
+    while (j < len_j) {
       p = p->next;
       j++;
     }
 
-    if (p == 0) {
-      return 0;
-    }
     return p->next;
   }
 
+  assert(0);
   return 0;
 }
 
@@ -979,27 +920,21 @@ struct ListNode* sortList(struct ListNode* head) {
 
     ListNode* p = dummy;
     for (size_t i = 0; i < merge_two; ++i) {
-      p = mergeStep(p, step);
+      p = mergeStep(p, step, step);
     }
 
     if (len % (step * 2) > step) {
-      mergeStep(p, step);
+      mergeStep(p, step, (len % (step * 2) - step));
     }
 
     step *= 2;
   }
 
   if (step < len) {
-    struct ListNode* q = goto_step(dummy, step);
-    struct ListNode* qq = q->next;
-    q->next = 0;
-
-    struct ListNode* r = mergeTwoLists(dummy->next, qq);
-    free(dummy);
-    return r;
-  } else {
-    struct ListNode* r = dummy->next;
-    free(dummy);
-    return r;
+    mergeStep(dummy, step, len - step);
   }
+
+  struct ListNode* r = dummy->next;
+  free(dummy);
+  return r;
 }
