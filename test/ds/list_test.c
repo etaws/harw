@@ -1,4 +1,5 @@
 #include "ds/list.h"
+#include "ds/dlist.h"
 #include "ds/tree.h"
 #include "tau/tau.h"
 
