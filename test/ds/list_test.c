@@ -1,5 +1,5 @@
-#include "ds/list.h"
 #include "ds/dlist.h"
+#include "ds/list.h"
 #include "ds/tree.h"
 #include "tau/tau.h"
 
@@ -380,4 +380,33 @@ TEST(tree, list_10) {
   REQUIRE_EQ(a[35], -886);
 
   list_node_clean(l1);
+}
+
+TEST(tree, tree_11) {
+
+  int a[] = {3, 9, 20, 0, 0, 15, 7};
+
+  TreeNode* root = tree_create(a, sizeof(a) / sizeof(a[0]));
+
+  int level = 0;
+  int* returnColumnSizes = 0;
+  int** r = levelOrder(root, &level, &returnColumnSizes);
+  REQUIRE_EQ(level, 3);
+
+  tree_clean(root);
+
+  for (size_t i = 0; i < level; ++i) {
+    for (size_t j = 0; j < returnColumnSizes[i]; ++j) {
+      printf("%d ", r[i][j]);
+    }
+    printf("\n");
+  }
+  
+  if (r != 0) {
+    free(r);
+  }
+
+  if (returnColumnSizes != 0) {
+    free(returnColumnSizes);
+  }
 }

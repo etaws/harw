@@ -34,4 +34,7 @@ void tree_destroy(tree* t);
 
 bool create_mirror_tree();
 
+int** levelOrder(struct TreeNode* root, int* returnSize,
+                 int** returnColumnSizes);
+
 #endif // HARW_TREE_H_

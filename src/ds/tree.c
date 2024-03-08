@@ -1007,3 +1007,62 @@ bool isValidBST(struct TreeNode* root) {
   int min = 0;
   return valid_with(root, &min, &max);
 }
+
+int** levelOrder(struct TreeNode* root, int* returnSize,
+                 int** returnColumnSizes) {
+
+  if (root == 0) {
+    (*returnSize) = 0;
+    return 0;
+  }
+
+  queue* q = queue_create(2000);
+  queue_add(q, root);
+  int current_size = 1;
+
+  int** r = malloc(sizeof(int*) * 2000);
+
+  int* current_out = 0;
+  size_t j = 0;
+  int* column = malloc(sizeof(int) * 2000);
+
+  int* full = malloc(sizeof(int) * 2000);
+  int* full_now = full;
+
+  while (1) {
+    if (queue_len(q) == 0) {
+      break;
+    }
+    int next_size = 0;
+    for (int i = 0; i < current_size; ++i) {
+      TreeNode* one = queue_delete(q);
+      if (current_out == 0) {
+        current_out = full_now;
+        full_now = full_now + current_size;
+      }
+      current_out[i] = one->val;
+      if (one->left != 0) {
+        queue_add(q, one->left);
+        next_size++;
+      }
+      if (one->right != 0) {
+        queue_add(q, one->right);
+        next_size++;
+      }
+    }
+
+    r[j] = current_out;
+    column[j] = current_size;
+    current_out = 0;
+    j++;
+
+    current_size = next_size;
+  }
+
+  queue_destroy(q);
+
+  (*returnSize) = j;
+  (*returnColumnSizes) = column;
+
+  return r;
+}
