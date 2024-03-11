@@ -37,4 +37,6 @@ bool create_mirror_tree();
 int** levelOrder(struct TreeNode* root, int* returnSize,
                  int** returnColumnSizes);
 
+int kthSmallest(struct TreeNode* root, int k);
+
 #endif // HARW_TREE_H_

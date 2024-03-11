@@ -1,6 +1,7 @@
 #include <assert.h>
 #include <stddef.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "ds/queue.h"
 #include "ds/tree.h"
@@ -1065,4 +1066,45 @@ int** levelOrder(struct TreeNode* root, int* returnSize,
   (*returnColumnSizes) = column;
 
   return r;
+}
+
+int kthSmallest(struct TreeNode* root, int k) {
+  if (root == 0) {
+    return 0;
+  }
+
+  int n = 0;
+  int r = 0;
+
+  TreeNode** a = malloc(10000 * sizeof(TreeNode*));
+  memset(a, 0, 10000 * sizeof(TreeNode*));
+  size_t i = 0;
+
+  TreeNode* current = root;
+  while (1) {
+    while (current != 0) {
+      a[i++] = current;
+      current = current->left;
+    }
+
+    if (i == 0) {
+      break;
+    }
+
+    i -= 1;
+    current = a[i];
+    r++;
+    n = current->val;
+    if (r == k) {
+      free(a);
+      return n;
+    }
+    current = a[i];
+
+    current = current->right;
+  }
+
+  free(a);
+
+  return n;
 }

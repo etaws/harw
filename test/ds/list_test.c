@@ -401,7 +401,7 @@ TEST(tree, tree_11) {
     }
     printf("\n");
   }
-  
+
   if (r != 0) {
     free(r);
   }
@@ -409,4 +409,16 @@ TEST(tree, tree_11) {
   if (returnColumnSizes != 0) {
     free(returnColumnSizes);
   }
+}
+
+TEST(tree, tree_12) {
+
+  int a[] = {3, 1, 4, 0, 2};
+
+  TreeNode* root = tree_create(a, sizeof(a) / sizeof(a[0]));
+
+  int r = kthSmallest(root, 1);
+  REQUIRE_EQ(r, 1);
+
+  tree_clean(root);
 }
