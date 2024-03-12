@@ -1,4 +1,3 @@
-#include "ds/dlist.h"
 #include "ds/list.h"
 #include "ds/queue.h"
 #include "ds/seek_two.h"
@@ -280,8 +279,6 @@ TEST(e, addStrings_2) {
   REQUIRE_EQ(r[1], '\0');
 
   free(r);
-
-  r = 0;
 }
 
 TEST(e, addStrings_3) {
@@ -299,7 +296,6 @@ TEST(e, addStrings_3) {
   REQUIRE_EQ(r[3], '\0');
 
   free(r);
-  r = 0;
 }
 
 TEST(e, addStrings_4) {
@@ -317,5 +313,4 @@ TEST(e, addStrings_4) {
   REQUIRE_EQ(r[3], '\0');
 
   free(r);
-  r = 0;
 }
