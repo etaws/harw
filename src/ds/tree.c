@@ -1108,3 +1108,50 @@ int kthSmallest(struct TreeNode* root, int k) {
 
   return n;
 }
+
+int* rightSideView(struct TreeNode* root, int* returnSize) {
+
+  if (root == 0) {
+    (*returnSize) = 0;
+    return 0;
+  }
+
+  int* ra = malloc(101 * sizeof(int));
+
+  queue* q = queue_create(101);
+  queue_add(q, root);
+  int current_size = 1;
+
+  size_t r = 0;
+  int j = 0;
+
+  while (1) {
+    if (queue_len(q) == 0) {
+      break;
+    }
+    int next_size = 0;
+    for (int i = 0; i < current_size; ++i) {
+      TreeNode* one = queue_delete(q);
+      if ((i + 1) == current_size) {
+        ra[j++] = one->val;
+      }
+      if (one->left != 0) {
+        queue_add(q, one->left);
+        next_size++;
+      }
+      if (one->right != 0) {
+        queue_add(q, one->right);
+        next_size++;
+      }
+    }
+
+    current_size = next_size;
+
+    r++;
+  }
+
+  queue_destroy(q);
+
+  (*returnSize) = j;
+  return ra;
+}

@@ -39,4 +39,6 @@ int** levelOrder(struct TreeNode* root, int* returnSize,
 
 int kthSmallest(struct TreeNode* root, int k);
 
+int* rightSideView(struct TreeNode* root, int* returnSize);
+
 #endif // HARW_TREE_H_
