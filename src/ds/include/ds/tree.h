@@ -41,4 +41,6 @@ int kthSmallest(struct TreeNode* root, int k);
 
 int* rightSideView(struct TreeNode* root, int* returnSize);
 
+void flatten(struct TreeNode* root);
+
 #endif // HARW_TREE_H_

@@ -1155,3 +1155,47 @@ int* rightSideView(struct TreeNode* root, int* returnSize) {
   (*returnSize) = j;
   return ra;
 }
+
+void flatten(struct TreeNode* root) {
+  if (root == 0) {
+    return;
+  }
+
+  TreeNode** a = malloc(20001 * sizeof(TreeNode*));
+  memset(a, 0, 20001 * sizeof(TreeNode*));
+
+  TreeNode** r = malloc(20001 * sizeof(TreeNode*));
+  memset(r, 0, 20001 * sizeof(TreeNode*));
+
+  size_t i = 0;
+  size_t r_i = 0;
+
+  TreeNode* current = root;
+  while (1) {
+    while (current != 0) {
+      r[r_i++] = current;
+      a[i++] = current;
+      current = current->left;
+    }
+
+    if (i == 0) {
+      break;
+    }
+
+    i -= 1;
+    current = a[i];
+
+    current = current->right;
+  }
+
+  free(a);
+
+  TreeNode* c = root;
+  for (size_t j = 1; j < r_i; ++j) {
+    c->right = r[j];
+    c->left = 0;
+    c = c->right;
+  }
+
+  free(r);
+}

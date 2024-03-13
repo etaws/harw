@@ -154,3 +154,14 @@ TEST(tree, tree_12) {
 
   tree_clean(root);
 }
+
+TEST(tree, tree_13) {
+
+  int a[] = {1, 2, 5, 3, 4, 0, 6};
+
+  TreeNode* root = tree_create(a, sizeof(a) / sizeof(a[0]));
+
+  flatten(root);
+
+  tree_clean(root);
+}
