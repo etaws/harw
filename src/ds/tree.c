@@ -1199,3 +1199,38 @@ void flatten(struct TreeNode* root) {
 
   free(r);
 }
+
+int getInOrderRoot(int root, int* inorder, int left, int right, int h[]) {
+  return h[root + 3000];
+}
+
+TreeNode* buildTreeRe(int r, int left, int right, int* preorder, int* inorder,
+                      int inorderSize, int h[]) {
+  if (left > right) {
+    return 0;
+  }
+
+  int root = preorder[r];
+
+  struct TreeNode* node = malloc(sizeof(TreeNode));
+  node->val = root;
+
+  int i = getInOrderRoot(root, inorder, left, right, h);
+  int left_len = i - left;
+  int right_len = right - i;
+  node->left = buildTreeRe(r + 1, left, left + left_len - 1, preorder, inorder,
+                           inorderSize, h);
+  node->right = buildTreeRe(r + i - left + 1, i + 1, right, preorder, inorder,
+                            inorderSize, h);
+
+  return node;
+}
+
+struct TreeNode* buildTree(int* preorder, int preorderSize, int* inorder,
+                           int inorderSize) {
+  int h[6001];
+  for (int i = 0; i < inorderSize; ++i) {
+    h[inorder[i] + 3000] = i;
+  }
+  return buildTreeRe(0, 0, inorderSize - 1, preorder, inorder, inorderSize, h);
+}

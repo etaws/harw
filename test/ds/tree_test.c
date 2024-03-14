@@ -165,3 +165,12 @@ TEST(tree, tree_13) {
 
   tree_clean(root);
 }
+
+TEST(tree, tree_14) {
+
+  int preorder[] = {3, 9, 20, 15, 7};
+
+  int inorder[] = {9, 3, 15, 20, 7};
+
+  TreeNode* root = buildTree(preorder, 5, inorder, 5);
+}
