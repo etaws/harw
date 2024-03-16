@@ -46,4 +46,6 @@ void flatten(struct TreeNode* root);
 struct TreeNode* buildTree(int* preorder, int preorderSize, int* inorder,
                            int inorderSize);
 
+int pathSum(struct TreeNode* root, int targetSum);
+
 #endif // HARW_TREE_H_

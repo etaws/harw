@@ -11,17 +11,17 @@
 typedef struct ht ht;
 
 // Create hash table and return pointer to it, or NULL if out of memory.
-ht* ht_create(void);
+ht* ht_create(size_t capacity);
 
 // Free memory allocated for hash table, including allocated keys.
 void ht_destroy(ht* table);
 
 // Get item with given key from hash table. Return
 // value (which was set with ht_set), or -1 if key not found.
-int32_t ht_get(ht* table, int32_t key);
+void ht_get(ht* table, int32_t key, int32_t* v);
 
 // Set item with given key to value (which must not
 // be NULL)；-1 for failed
-int32_t ht_set(ht* table, int32_t key, int32_t value);
+void ht_set(ht* table, int32_t key, int32_t value);
 
 #endif

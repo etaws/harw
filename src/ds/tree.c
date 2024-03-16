@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "ds/ht.h"
 #include "ds/queue.h"
 #include "ds/tree.h"
 
@@ -1233,4 +1234,44 @@ struct TreeNode* buildTree(int* preorder, int preorderSize, int* inorder,
     h[inorder[i] + 3000] = i;
   }
   return buildTreeRe(0, 0, inorderSize - 1, preorder, inorder, inorderSize, h);
+}
+
+int pathSumRe(TreeNode* root, int target, int sum, ht* m) {
+  if (root == 0) {
+    return 0;
+  }
+
+  int new_sum = root->val + sum;
+  int diff = new_sum - target;
+
+  int r = 0;
+  ht_get(m, diff, &r);
+
+  int old = 0;
+  ht_get(m, new_sum, &old);
+  ht_set(m, new_sum, old + 1);
+
+  int left = pathSumRe(root->left, target, new_sum, m);
+  int right = pathSumRe(root->right, target, new_sum, m);
+
+  r = r + left + right;
+
+  int ne = 0;
+  ht_get(m, new_sum, &ne);
+  ht_set(m, new_sum, ne - 1);
+
+  return r;
+}
+
+int pathSum(struct TreeNode* root, int targetSum) {
+
+  ht* m = ht_create(201);
+
+  ht_set(m, 0, 1);
+
+  int r = pathSumRe(root, targetSum, 0, m);
+
+  ht_destroy(m);
+
+  return r;
 }

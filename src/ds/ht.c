@@ -7,92 +7,85 @@
 #include <stdlib.h>
 #include <string.h>
 
-// Hash table entry (slot may be filled or empty).
-typedef struct {
+typedef struct ht_entry ht_entry;
+
+struct ht_entry {
   int32_t key;
   int32_t value;
-} ht_entry;
-
-#define INITIAL_CAPACITY 16
-
-// Hash table structure: create with ht_create, free with ht_destroy.
-struct ht {
-  ht_entry entries[INITIAL_CAPACITY];
-
-  ht_entry black_hole[INITIAL_CAPACITY];
-
-  size_t black_hole_length;
+  ht_entry* next;
 };
 
-// Create hash table and return pointer to it, or NULL if out of memory.
-ht* ht_create(void) {
+struct ht {
+  ht_entry** entries;
+
+  size_t n;
+  size_t capacity;
+};
+
+ht* ht_create(size_t capacity) {
   // Allocate space for hash table struct.
   ht* table = malloc(sizeof(ht));
-  if (table == NULL) {
-    return NULL;
+  if (table == 0) {
+    return 0;
   }
 
-  table->black_hole_length = 0;
+  table->capacity = capacity;
+  table->n = 0;
 
-  for (size_t i = 0; i < INITIAL_CAPACITY; ++i) {
-    table->entries[i].key = -1;
-    table->entries[i].value = -1;
-
-    table->black_hole[i].key = -1;
-    table->black_hole[i].value = -1;
-  }
+  table->entries = (ht_entry**)malloc(sizeof(ht_entry*) * capacity);
+  memset(table->entries, 0, capacity * sizeof(ht_entry*));
 
   return table;
 }
 
-// Free memory allocated for hash table
-void ht_destroy(ht* table) { free(table); }
-
-static size_t hash_key(int32_t key) { return key % INITIAL_CAPACITY; }
-
-// Get item with given key from hash table. Return
-// value (which was set with ht_set), or -1 if key not found.
-int32_t ht_get(ht* table, int32_t key) {
-  // AND hash with capacity-1 to ensure it's within entries array.
-  size_t hash = hash_key(key);
-
-  assert(hash < INITIAL_CAPACITY);
-
-  if (table->entries[hash].key == -1) {
-    return -1;
-  }
-
-  if (table->entries[hash].key == key) {
-    return table->entries[hash].value;
-  }
-
-  for (size_t j = 0; j < table->black_hole_length; ++j) {
-    if (table->black_hole[j].key == key) {
-      return table->black_hole[j].value;
+void ht_destroy(ht* table) {
+  for (size_t i = 0; i < table->capacity; ++i) {
+    if (table->entries[i] != 0) {
+      ht_entry* head = table->entries[i];
+      while (head != 0) {
+        ht_entry* t = head->next;
+        free(head);
+        head = t;
+      }
     }
   }
 
-  return -1;
+  free(table->entries);
+  free(table);
 }
 
-// Set item with given key to value (which must not
-// be NULL)；-1 for failed
-int32_t ht_set(ht* table, int32_t key, int32_t value) {
-  size_t hash = hash_key(key);
+static size_t hash_key(ht* table, int32_t key) { return key % table->capacity; }
 
-  assert(hash < INITIAL_CAPACITY);
+void ht_get(ht* table, int32_t key, int32_t* v) {
 
-  if (table->entries[hash].key == -1) {
-    table->entries[hash].key = key;
-    table->entries[hash].value = value;
-    return (int32_t)hash;
+  (*v) = 0;
+
+  size_t hash = hash_key(table, key);
+  ht_entry* head = table->entries[hash];
+  if (head == 0) {
+    return;
   }
 
-  if (table->black_hole_length < INITIAL_CAPACITY) {
-    table->black_hole[table->black_hole_length].key = key;
-    table->black_hole[table->black_hole_length].value = value;
-    return (int32_t)table->black_hole_length++;
+  while (head != 0) {
+    if (head->key == key) {
+      (*v) = head->value;
+      return;
+    }
+    head = head->next;
   }
+}
 
-  return -1;
+void ht_set(ht* table, int32_t key, int32_t value) {
+  ht_entry* node = (ht_entry*)malloc(sizeof(ht_entry));
+  node->key = key;
+  node->value = value;
+  node->next = 0;
+
+  size_t hash = hash_key(table, key);
+  if (table->entries[hash] == 0) {
+    table->entries[hash] = node;
+  } else {
+    node->next = table->entries[hash];
+    table->entries[hash] = node;
+  }
 }

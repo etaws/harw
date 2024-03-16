@@ -174,3 +174,16 @@ TEST(tree, tree_14) {
 
   TreeNode* root = buildTree(preorder, 5, inorder, 5);
 }
+
+TEST(tree, tree_15) {
+
+  int a[] = {5, 4, 8, 11, 0, 13, 4, 7, 2, 0, 0, 5, 1};
+  TreeNode* root = tree_create(a, sizeof(a) / sizeof(a[0]));
+
+  int r = pathSum(root, 22);
+
+  printf("%d\n", r);
+  REQUIRE_EQ(r, 3);
+
+  tree_clean(root);
+}
