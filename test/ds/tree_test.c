@@ -122,7 +122,9 @@ TEST(tree, tree_11) {
 
   int level = 0;
   int* returnColumnSizes = 0;
-  int** r = levelOrder(root, &level, &returnColumnSizes);
+  int* column = 0;
+  int* full = 0;
+  int** r = levelOrder(root, &level, &returnColumnSizes, &column, &full);
   REQUIRE_EQ(level, 3);
 
   tree_clean(root);
@@ -132,6 +134,14 @@ TEST(tree, tree_11) {
       printf("%d ", r[i][j]);
     }
     printf("\n");
+  }
+
+  if (full != 0) {
+    free(full);
+  }
+
+  if (column != 0) {
+    free(column);
   }
 
   if (r != 0) {
@@ -173,6 +183,8 @@ TEST(tree, tree_14) {
   int inorder[] = {9, 3, 15, 20, 7};
 
   TreeNode* root = buildTree(preorder, 5, inorder, 5);
+
+  tree_clean(root);
 }
 
 TEST(tree, tree_15) {

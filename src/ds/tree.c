@@ -1011,7 +1011,7 @@ bool isValidBST(struct TreeNode* root) {
 }
 
 int** levelOrder(struct TreeNode* root, int* returnSize,
-                 int** returnColumnSizes) {
+                 int** returnColumnSizes, int** column, int** full) {
 
   if (root == 0) {
     (*returnSize) = 0;
@@ -1026,10 +1026,10 @@ int** levelOrder(struct TreeNode* root, int* returnSize,
 
   int* current_out = 0;
   size_t j = 0;
-  int* column = malloc(sizeof(int) * 2000);
+  (*column) = malloc(sizeof(int) * 2000);
 
-  int* full = malloc(sizeof(int) * 2000);
-  int* full_now = full;
+  (*full) = malloc(sizeof(int) * 2000);
+  int* full_now = (*full);
 
   while (1) {
     if (queue_len(q) == 0) {
@@ -1054,7 +1054,7 @@ int** levelOrder(struct TreeNode* root, int* returnSize,
     }
 
     r[j] = current_out;
-    column[j] = current_size;
+    (*column)[j] = current_size;
     current_out = 0;
     j++;
 
@@ -1064,7 +1064,7 @@ int** levelOrder(struct TreeNode* root, int* returnSize,
   queue_destroy(q);
 
   (*returnSize) = j;
-  (*returnColumnSizes) = column;
+  (*returnColumnSizes) = (*column);
 
   return r;
 }
