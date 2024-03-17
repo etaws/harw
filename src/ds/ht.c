@@ -75,17 +75,33 @@ void ht_get(ht* table, int32_t key, int32_t* v) {
   }
 }
 
-void ht_set(ht* table, int32_t key, int32_t value) {
+ht_entry* new_entry(int32_t key, int32_t value) {
   ht_entry* node = (ht_entry*)malloc(sizeof(ht_entry));
   node->key = key;
   node->value = value;
   node->next = 0;
 
+  return node;
+}
+void ht_set(ht* table, int32_t key, int32_t value) {
+
   size_t hash = hash_key(table, key);
-  if (table->entries[hash] == 0) {
-    table->entries[hash] = node;
-  } else {
-    node->next = table->entries[hash];
-    table->entries[hash] = node;
+
+  ht_entry* head = table->entries[hash];
+  if (head == 0) {
+    table->entries[hash] = new_entry(key, value);
+    return;
   }
+
+  while (head != 0) {
+    if (head->key == key) {
+      head->value = value;
+      return;
+    }
+    head = head->next;
+  }
+
+  ht_entry* node = new_entry(key, value);
+  node->next = table->entries[hash];
+  table->entries[hash] = node;
 }
