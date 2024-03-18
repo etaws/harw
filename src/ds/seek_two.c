@@ -375,3 +375,57 @@ void numArrayFree(NumArray* obj) {
   free(obj);
   obj = 0;
 }
+
+int* permute_expand(int* a, int len, int v, int* b) {
+  for (int j = 0; j <= len; ++j) {
+    for (int i = 0; i < len; i++) {
+      if (j == i) {
+        *b = v;
+        b++;
+      }
+      *b = a[i];
+      b++;
+    }
+
+    if (j == len) {
+      *b = v;
+      b++;
+    }
+  }
+
+  return b;
+}
+
+#include <stdio.h>
+
+int permuteRe(int* nums, int numsSize, int a[]) {
+  if (numsSize == 1) {
+    a[0] = nums[0];
+    return 1;
+  }
+
+  int n = permuteRe(nums, numsSize - 1, a);
+
+  int* b = malloc(sizeof(int) * n * numsSize * numsSize);
+  memset(b, 0, sizeof(int) * 720);
+
+  int* c = b;
+  int* d = a;
+  for (int i = 0; i < n; i++) {
+    c = permute_expand(d, numsSize - 1, nums[numsSize - 1], c);
+    d = d + (numsSize - 1);
+  }
+
+  memcpy(a, b, sizeof(int) * n * numsSize * numsSize);
+
+  free(b);
+
+  printf("%d -> ", n * numsSize * numsSize);
+  for (int k = 0; k < n * numsSize * numsSize; k++) {
+    printf("%d ", a[k]);
+  }
+
+  printf("\n");
+
+  return n * numsSize;
+}

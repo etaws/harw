@@ -31,4 +31,6 @@ int numArraySumRange(NumArray* obj, int left, int right);
 
 void numArrayFree(NumArray* obj);
 
+int permuteRe(int* nums, int numsSize, int a[]);
+
 #endif

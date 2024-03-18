@@ -316,3 +316,15 @@ TEST(e, addStrings_4) {
 
   free(r);
 }
+
+TEST(e, permuteRe) {
+
+  int a[] = {1, 2, 3, 4, 5, 6};
+
+  int* b = malloc(sizeof(int) * 720 * 6);
+  memset(b, 0, sizeof(int) * 720);
+  int r = permuteRe(a, sizeof(a) / sizeof(a[0]), b);
+  REQUIRE_EQ(r, 720);
+
+  free(b);
+}
