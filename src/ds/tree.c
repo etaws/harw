@@ -1275,3 +1275,30 @@ int pathSum(struct TreeNode* root, int targetSum) {
 
   return r;
 }
+
+TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+  if ((root == 0) || (root == p) || (root == q)) {
+    return root;
+  }
+
+  if (root->val == p->val) {
+    return root;
+  }
+
+  if (root->val == q->val) {
+    return root;
+  }
+
+  TreeNode* left = lowestCommonAncestor(root->left, p, q);
+  TreeNode* right = lowestCommonAncestor(root->right, p, q);
+
+  if (left == 0) {
+    return right;
+  }
+
+  if (right == 0) {
+    return left;
+  }
+
+  return root;
+}
